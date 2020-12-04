@@ -1,9 +1,4 @@
 import * as types  from './actionTypes'
-//import axios from 'axios'
-import regeneratorRuntime from "regenerator-runtime"
-import { message } from 'antd'
-
-import { saveUsername} from 'util'
 
 import api from  'api'
 

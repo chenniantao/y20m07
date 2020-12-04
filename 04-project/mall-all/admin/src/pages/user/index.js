@@ -1,24 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Layout, Breadcrumb, Table } from 'antd';
 const { Content } = Layout;
 
 import CustomLayout from 'components/custom-layout'
+import { actionCreator } from './store';
 
 class User extends Component {
+    componentDidMount(){
+        this.props.handlePage()
+    }
     render() {
-        const dataSource = [
-            {
-                key: '1',
-                username: '胡彦斌',
-                isAdmin: '否',
-                isActive: '是',
-                email:'111@qq.com',
-                phone:'13212344321',
-                wxopenid:'dsfdskfkdsfsd',
-                createdAt:'2020-12-09 12:11:11'
-            }        
-        ];
-
+        const { list } = this.props
+        const dataSource = list
         const columns = [
             {
                 title: '用户名',
@@ -29,6 +23,7 @@ class User extends Component {
                 title: '是否管理员',
                 dataIndex: 'isAdmin',
                 key: 'isAdmin',
+                render: isAdmin => isAdmin ? '是' : '否'
             },
             {
                 title: '是否有效用户',
@@ -72,7 +67,11 @@ class User extends Component {
                             minHeight: 280,
                         }}
                     >
-                        <Table dataSource={dataSource} columns={columns} />
+                        <Table
+                            rowKey="_id" 
+                            dataSource={dataSource} 
+                            columns={columns} 
+                        />
                     </Content>
                 </CustomLayout>
             </div>
@@ -80,4 +79,12 @@ class User extends Component {
     }
 }
 
-export default User
+const mapStateToProps = (state) => ({
+    list: state.get('user').get('list')
+})
+const mapDispatchToProps = (dispatch) => ({
+    handlePage: () => {
+        dispatch(actionCreator.getPageAction())
+    }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(User)

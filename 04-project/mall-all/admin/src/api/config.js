@@ -8,5 +8,6 @@ export const API_CONFIG = {
     login:                              ['/users/login','post'],
     getCaptcha:                         ['/users/captcha','get'],
     getCounts:                          ['/counts', 'get'],  
-    logout:                             ['/users/logout', 'get'],              
+    logout:                             ['/users/logout', 'get'],
+    getUserList:                        ['/users/list', 'get'],                     
 }
