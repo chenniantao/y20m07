@@ -12,7 +12,7 @@ class User extends Component {
         this.props.handlePage(1)
     }
     render() {
-        const { list, current, total, pageSize, handlePage } = this.props
+        const { list, current, total, pageSize, handlePage, isFetching, handleUpdateIsActive } = this.props
         const dataSource = list
         const columns = [
             {
@@ -30,10 +30,16 @@ class User extends Component {
                 title: '是否有效用户',
                 dataIndex: 'isActive',
                 key: 'isActive',
-                render: isActive => <Switch 
+                render: (isActive,record) => <Switch 
                     checkedChildren="是" 
                     unCheckedChildren="否"
                     checked={isActive=='1' ? true : false}
+                    onChange={
+                        checked=>{
+                            const newActive = checked ? '1' : '0'
+                            handleUpdateIsActive(record._id, newActive)
+                        }
+                    }
                 />
             },
             {
@@ -91,6 +97,12 @@ class User extends Component {
                                     handlePage(pagination.current)
                                 }
                             }
+                            loading={
+                                {
+                                    spinning: isFetching,
+                                    tip:'数据正在请求中...'
+                                }
+                            }
                         />
                     </Content>
                 </CustomLayout>
@@ -104,10 +116,14 @@ const mapStateToProps = (state) => ({
     current: state.get('user').get('current'),
     total: state.get('user').get('total'),
     pageSize: state.get('user').get('pageSize'),
+    isFetching: state.get('user').get('isFetching'),
 })
 const mapDispatchToProps = (dispatch) => ({
     handlePage: (page) => {
         dispatch(actionCreator.getPageAction(page))
+    },
+    handleUpdateIsActive:(id,newActive)=>{
+        dispatch(actionCreator.getUpdateIsActive(id, newActive))
     }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(User)

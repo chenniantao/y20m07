@@ -5,7 +5,8 @@ const defaultState = fromJS({
     current: 1, 
     total: 0, 
     pageSize: 0,
-    list: []
+    list: [],
+    isFetching:false
 })
 
 function reducer(state = defaultState, action) {
@@ -18,6 +19,12 @@ function reducer(state = defaultState, action) {
             pageSize
         })
     }
+    if (action.type == types.PAGE_REQUEST_START){
+        return state.set('isFetching',true)
+    }
+    if (action.type == types.PAGE_REQUEST_END) {
+        return state.set('isFetching', false)
+    }    
     return state
 }
 
