@@ -3,7 +3,7 @@ import * as types  from './actionTypes'
 import regeneratorRuntime from "regenerator-runtime"
 import { message } from 'antd'
 
-import { saveUsername} from 'util'
+import { saveUsername,goHome} from 'util'
 
 import api from  'api'
 
@@ -72,7 +72,7 @@ export const getLoginAction = (values) => {
             //保存用户的登录状态
             saveUsername(data.data.username)
             //跳转到后台首页
-            window.location.href = '/'
+            goHome()
         }
         dispatch(getRequestEnd())
     }

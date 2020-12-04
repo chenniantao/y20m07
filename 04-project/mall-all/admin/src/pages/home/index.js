@@ -17,7 +17,7 @@ class Home extends Component{
         <div className="Home">
             <CustomLayout>
                 <Breadcrumb style={{ margin: '16px 0' }}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
+                    <Breadcrumb.Item>首页</Breadcrumb.Item>
                 </Breadcrumb>
                 <Content
                     className="site-layout-background"
