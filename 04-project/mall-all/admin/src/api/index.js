@@ -24,8 +24,15 @@ const request=(url,method,data)=>{
     return new Promise((resolve,rejcect)=>{
         const options = {
             method:method,
-            url:url,
-            data:data
+            url:url
+        }
+        switch(method.toUpperCase()){
+            case 'GET':
+                options.params = data
+                break
+            default:
+                options.data = data
+                break
         }
         axios(options)
         .then(result=>{

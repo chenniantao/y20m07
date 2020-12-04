@@ -7,9 +7,11 @@ const setPage = (payload)=>({
     payload: payload
 })
 
-export const getPageAction = ()=>{
+export const getPageAction = (page)=>{
     return async function (dispatch) {
-        const result = await api.getUserList()
+        const result = await api.getUserList({
+            page: page
+        })
         if (result.code == 0) {
             dispatch(setPage(result.data))
         }

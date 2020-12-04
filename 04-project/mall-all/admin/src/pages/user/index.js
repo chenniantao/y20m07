@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Breadcrumb, Table } from 'antd';
+import { Layout, Breadcrumb, Table, Switch } from 'antd';
 const { Content } = Layout;
 
 import CustomLayout from 'components/custom-layout'
 import { actionCreator } from './store';
+import { formatDate } from 'util'
 
 class User extends Component {
     componentDidMount(){
-        this.props.handlePage()
+        this.props.handlePage(1)
     }
     render() {
-        const { list } = this.props
+        const { list, current, total, pageSize, handlePage } = this.props
         const dataSource = list
         const columns = [
             {
@@ -29,6 +30,11 @@ class User extends Component {
                 title: '是否有效用户',
                 dataIndex: 'isActive',
                 key: 'isActive',
+                render: isActive => <Switch 
+                    checkedChildren="是" 
+                    unCheckedChildren="否"
+                    checked={isActive=='1' ? true : false}
+                />
             },
             {
                 title: 'email',
@@ -49,6 +55,7 @@ class User extends Component {
                 title: '注册时间',
                 dataIndex: 'createdAt',
                 key: 'createdAt',
+                render: createdAt => formatDate(createdAt)
             },                          
         ];
         return (
@@ -71,6 +78,19 @@ class User extends Component {
                             rowKey="_id" 
                             dataSource={dataSource} 
                             columns={columns} 
+                            pagination={
+                                {
+                                    current: current,
+                                    pageSize: pageSize,
+                                    total: total,
+                                    showSizeChanger:false
+                                }
+                            }
+                            onChange={
+                                (pagination)=>{
+                                    handlePage(pagination.current)
+                                }
+                            }
                         />
                     </Content>
                 </CustomLayout>
@@ -80,11 +100,14 @@ class User extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    list: state.get('user').get('list')
+    list: state.get('user').get('list'),
+    current: state.get('user').get('current'),
+    total: state.get('user').get('total'),
+    pageSize: state.get('user').get('pageSize'),
 })
 const mapDispatchToProps = (dispatch) => ({
-    handlePage: () => {
-        dispatch(actionCreator.getPageAction())
+    handlePage: (page) => {
+        dispatch(actionCreator.getPageAction(page))
     }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(User)
