@@ -56,10 +56,7 @@ class UploadImage extends Component{
                 return item.response.url
             }
         }).join(',')
-        //有路径并且不以,号结尾
-        if (imageUrlList && !(/,$/.test(imageUrlList))){
-            this.props.getImageUrlList(imageUrlList)
-        }
+        this.props.getImageUrlList(imageUrlList)
         this.setState({
             fileList: fileList
         })

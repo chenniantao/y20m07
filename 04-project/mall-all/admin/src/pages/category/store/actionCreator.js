@@ -67,6 +67,10 @@ export const setIcon = (payload) => ({
 const setIconError = () => ({
     type: types.SET_ICON_ERROR
 })
+const setCategoies = (payload) => ({
+    type: types.SET_CATEGORIES,
+    payload: payload
+})
 export const getSaveAction = (values) => {
     return async function (dispatch, getState) {
         try {
@@ -79,8 +83,33 @@ export const getSaveAction = (values) => {
             const result = await api.addCategory(values)
             if (result.code == 0) {
                 message.success('添加分类成功',1)
+                dispatch(setCategoies(result.data))
             }else{
                 message.error(result.message, 1)
+            }
+        }
+        catch (e) {
+            message.error('网络请求失败', 1)
+        }
+    }
+}
+export const getValidateAction = () => {
+    return  function (dispatch, getState) {
+        const icon = getState().get('category').get('icon')
+        if (!icon) {
+            dispatch(setIconError())
+            return
+        }
+    }
+}
+export const getLevelCategoriesAction = () => {
+    return async function (dispatch) {
+        try {
+            const result = await api.getLevelCategories({
+                level: 2
+            })
+            if (result.code == 0) {
+                dispatch(setCategoies(result.data))
             }
         }
         catch (e) {

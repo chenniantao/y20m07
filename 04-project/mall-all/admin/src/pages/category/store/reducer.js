@@ -7,6 +7,7 @@ const defaultState = fromJS({
     pageSize: 0,
     list: [],
     isFetching:false,
+    categories:[],
     icon:'',
     iconValidate:{
         help:'',
@@ -44,7 +45,10 @@ function reducer(state = defaultState, action) {
             help: '请上传手机分类图片',
             validateStatus: 'error'
         }))
-    }    
+    } 
+    if (action.type == types.SET_CATEGORIES) {
+        return state.set('categories', action.payload)
+    }         
     return state
 }
 

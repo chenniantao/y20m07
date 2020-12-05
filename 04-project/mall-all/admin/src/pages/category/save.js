@@ -25,8 +25,12 @@ import { CATEGORY_ICON_UPLOAD } from 'api/config'
 import { actionCreator } from './store';
 
 class CategorySave extends Component {
+    componentDidMount(){
+        this.props.handleLevelCategories()
+    }
     render() {    
-        const { handleIcon, iconValidate, handleSave} = this.props   
+        const { handleIcon, handleValidate,iconValidate, handleSave, categories} = this.props   
+        const options = categories.map(category => <Option key={category._id} value={category._id}>{category.name}</Option>)  
         return (
             <div className="CategorySave">
                 <CustomLayout>
@@ -47,6 +51,7 @@ class CategorySave extends Component {
                             {...layout} 
                             name="control-hooks" 
                             onFinish={handleSave}
+                            onFinishFailed={handleValidate}
                         >
                             <Form.Item
                                 name="pid"
@@ -64,6 +69,7 @@ class CategorySave extends Component {
                                     allowClear
                                 >
                                     <Option value="0">根分类</Option>
+                                    {options}
                                 </Select>
                             </Form.Item>                            
                             <Form.Item
@@ -114,7 +120,8 @@ class CategorySave extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    iconValidate: state.get('category').get('iconValidate')
+    iconValidate: state.get('category').get('iconValidate'),
+    categories: state.get('category').get('categories'),
 })
 const mapDispatchToProps = (dispatch) => ({
     handleIcon: (icon) => {
@@ -122,6 +129,13 @@ const mapDispatchToProps = (dispatch) => ({
     },
     handleSave:(values)=>{
         dispatch(actionCreator.getSaveAction(values))
+    },
+    handleValidate: ({ values})=>{
+        console.log(values)
+        dispatch(actionCreator.getValidateAction())
+    },
+    handleLevelCategories:()=>{
+        dispatch(actionCreator.getLevelCategoriesAction())
     }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(CategorySave)
