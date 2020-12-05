@@ -9,7 +9,7 @@ class Category extends Component{
     render(){
         return(
             <Switch>
-                <Route path='/category/save/:categoryId' component={CategorySave} />
+                <Route path='/category/save/:categoryId?' component={CategorySave} />
                 <Route path='/category' component={CategoryList}  />
             </Switch>
         )
