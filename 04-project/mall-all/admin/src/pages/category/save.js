@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-
 import { Layout, Breadcrumb, Form, Input, Button, Select,Upload } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 const { Content } = Layout;
 const { Option } = Select;
 const layout = {
@@ -20,22 +18,20 @@ const tailLayout = {
 };
 
 import CustomLayout from 'components/custom-layout'
+import UploadImage from 'components/upload-image'
+
+import { CATEGORY_ICON_UPLOAD } from 'api/config'
 
 class CategorySave extends Component {
     constructor(props){
         super(props)
-        this.state = {
-            loading: false
-        }
+        this.getImageUrlList = this.getImageUrlList.bind(this)
+
     }
-    render() {
-        const { loading, imageUrl } = this.state;
-        const uploadButton = (
-            <div>
-                {loading ? <LoadingOutlined /> : <PlusOutlined />}
-                <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-        );            
+    getImageUrlList(urls){
+        console.log(urls)
+    }
+    render() {         
         return (
             <div className="CategorySave">
                 <CustomLayout>
@@ -105,17 +101,11 @@ class CategorySave extends Component {
                                     },
                                 ]}
                             >
-                                <Upload
-                                    name="avatar"
-                                    listType="picture-card"
-                                    className="avatar-uploader"
-                                    showUploadList={false}
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                    beforeUpload={()=>{}}
-                                    onChange={()=>{}}
-                                >
-                                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                                </Upload>
+                                <UploadImage 
+                                    getImageUrlList={this.getImageUrlList}
+                                    max={1}
+                                    action={CATEGORY_ICON_UPLOAD}
+                                />
                             </Form.Item>                                                         
                             <Form.Item {...tailLayout}>
                                 <Button type="primary" htmlType="submit">
