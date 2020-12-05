@@ -51,12 +51,15 @@ class UploadImage extends Component{
     };
 
     handleChange({ fileList }){
-        const fileListStr = fileList.map(item=>{
+        const imageUrlList = fileList.map(item=>{
             if (item.response && item.response.status == 'done'){
                 return item.response.url
             }
         }).join(',')
-        this.props.getImageUrlList(fileListStr)
+        //有路径并且不以,号结尾
+        if (imageUrlList && !(/,$/.test(imageUrlList))){
+            this.props.getImageUrlList(imageUrlList)
+        }
         this.setState({
             fileList: fileList
         })

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Layout, Breadcrumb, Form, Input, Button, Select,Upload } from 'antd';
 const { Content } = Layout;
 const { Option } = Select;
@@ -21,17 +22,11 @@ import CustomLayout from 'components/custom-layout'
 import UploadImage from 'components/upload-image'
 
 import { CATEGORY_ICON_UPLOAD } from 'api/config'
+import { actionCreator } from './store';
 
 class CategorySave extends Component {
-    constructor(props){
-        super(props)
-        this.getImageUrlList = this.getImageUrlList.bind(this)
-
-    }
-    getImageUrlList(urls){
-        console.log(urls)
-    }
-    render() {         
+    render() {    
+        const { handleIcon, iconValidate, handleSave} = this.props   
         return (
             <div className="CategorySave">
                 <CustomLayout>
@@ -48,7 +43,11 @@ class CategorySave extends Component {
                             minHeight: 280,
                         }}
                     >
-                        <Form {...layout} name="control-hooks" onFinish={(values)=>{console.log(values)}}>
+                        <Form 
+                            {...layout} 
+                            name="control-hooks" 
+                            onFinish={handleSave}
+                        >
                             <Form.Item
                                 name="pid"
                                 label="父级分类"
@@ -92,19 +91,14 @@ class CategorySave extends Component {
                                 <Input />
                             </Form.Item>
                             <Form.Item
-                                name="icon"
                                 label="手机分类图标"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: '请上传手机分类图标'
-                                    },
-                                ]}
+                                required={true}
+                                {...iconValidate.toJS()}
                             >
                                 <UploadImage 
-                                    getImageUrlList={this.getImageUrlList}
                                     max={1}
                                     action={CATEGORY_ICON_UPLOAD}
+                                    getImageUrlList={handleIcon}
                                 />
                             </Form.Item>                                                         
                             <Form.Item {...tailLayout}>
@@ -119,5 +113,15 @@ class CategorySave extends Component {
         )
     }
 }
-
-export default CategorySave
+const mapStateToProps = (state) => ({
+    iconValidate: state.get('category').get('iconValidate')
+})
+const mapDispatchToProps = (dispatch) => ({
+    handleIcon: (icon) => {
+        dispatch(actionCreator.setIcon(icon))
+    },
+    handleSave:(values)=>{
+        dispatch(actionCreator.getSaveAction(values))
+    }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(CategorySave)
