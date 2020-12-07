@@ -20,7 +20,10 @@ class CategoryList extends Component {
             pageSize, 
             handlePage, 
             isFetching, 
-            handleUpdateName 
+            handleUpdateName,
+            handleUpdateMobileName, 
+            handleUpdateIsShow,
+            handleUpdateIsFloor,
         } = this.props
         const dataSource = list
         const columns = [
@@ -43,21 +46,61 @@ class CategoryList extends Component {
                 title: '手机分类名称',
                 dataIndex: 'mobileName',
                 key: 'mobileName',
+                width: '20%',
+                render: (mobileName, record) => <Input
+                    style={{ width: '60%' }}
+                    defaultValue={mobileName}
+                    onBlur={ev => {
+                        if (ev.target.value != mobileName) {
+                            handleUpdateMobileName(record._id, ev.target.value)
+                        }
+                    }}
+                ></Input>                
             },
             {
                 title: '手机图标',
                 dataIndex: 'icon',
                 key: 'icon',
+                width: '15%',
+                render: icon => <img style={{width:'50px',height:'50px',borderRadius:'50%'}} src={icon} />
             },
             {
                 title: '是否显示',
                 dataIndex: 'isShow',
                 key: 'isShow',
+                width: '10%',
+                render: (isShow, record) => <Switch
+                    checkedChildren="显示"
+                    unCheckedChildren="隐藏"
+                    checked={isShow == '1' ? true : false}
+                    onChange={
+                        checked => {
+                            const newIsShow = checked ? '1' : '0'
+                            handleUpdateIsShow(record._id, newIsShow)
+                        }
+                    }
+                ></Switch>                
             },
             {
                 title: '是否是楼层',
                 dataIndex: 'isFloor',
                 key: 'isFloor',
+                width: '10%',
+                render: (isFloor, record) =>{
+                    return record.level == 1 ? 
+                        <Switch
+                            checkedChildren="显示"
+                            unCheckedChildren="隐藏"
+                            checked={isFloor == '1' ? true : false}
+                            onChange={
+                                checked => {
+                                    const newIsFloor = checked ? '1' : '0'
+                                    handleUpdateIsFloor(record._id, newIsFloor)
+                                }
+                            }
+                        ></Switch>
+                        : null    
+                }                  
             },
             {
                 title: '排序',
@@ -137,6 +180,15 @@ const mapDispatchToProps = (dispatch) => ({
     },
     handleUpdateName: (id, newName) => {
         dispatch(actionCreator.getUpdateNameAction(id, newName))
-    }
+    },
+    handleUpdateMobileName: (id, newName) => {
+        dispatch(actionCreator.getUpdateMobileNameAction(id, newName))
+    }, 
+    handleUpdateIsShow: (id, newIsShow) => {
+        dispatch(actionCreator.getUpdateIsShowAction(id, newIsShow))
+    },
+    handleUpdateIsFloor: (id, newIsFloor) => {
+        dispatch(actionCreator.getUpdateIsFloorAction(id, newIsFloor))
+    },          
 })
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)

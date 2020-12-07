@@ -17,5 +17,8 @@ export const API_CONFIG = {
     addCategory:                        ['/categories', 'post'],         
     getLevelCategories:                 ['/categories/levelCategories', 'get'],
     getCategoryList:                    ['/categories/list', 'get'], 
-    updateCategoriesName:               ['/categories/name', 'put'],                      
+    updateCategoriesName:               ['/categories/name', 'put'],
+    updateCategoriesMobileName:         ['/categories/mobileName', 'put'],
+    updateCategoriesIsShow:             ['/categories/isShow', 'put'],                      
+    updateCategoriesIsFloor:            ['/categories/isFloor', 'put'],                      
 }

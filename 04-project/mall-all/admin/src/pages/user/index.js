@@ -40,7 +40,7 @@ class User extends Component {
                             handleUpdateIsActive(record._id, newActive)
                         }
                     }
-                />
+                ></Switch>
             },
             {
                 title: 'email',

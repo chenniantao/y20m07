@@ -63,7 +63,81 @@ export const getUpdateNameAction = (id,newName) => {
         }
     }
 }
-
+export const getUpdateMobileNameAction = (id, newName) => {
+    return async function (dispatch, getState) {
+        dispatch(getPageRequestStart())
+        const page = getState().get('category').get('current')
+        try {
+            const result = await api.updateCategoriesMobileName({
+                id: id,
+                mobileName: newName,
+                page: page
+            })
+            if (result.code == 0) {
+                dispatch(setPage(result.data))
+                message.success('修改成功', 1)
+            } else {
+                message.error(result.message, 1)
+            }
+        }
+        catch (e) {
+            message.error('网络请求失败', 1)
+        }
+        finally {
+            dispatch(getPageRequestEnd())
+        }
+    }
+}
+export const getUpdateIsShowAction = (id, newIsShow) => {
+    return async function (dispatch, getState) {
+        dispatch(getPageRequestStart())
+        const page = getState().get('category').get('current')
+        try {
+            const result = await api.updateCategoriesIsShow({
+                id: id,
+                isShow: newIsShow,
+                page: page
+            })
+            if (result.code == 0) {
+                dispatch(setPage(result.data))
+                message.success('修改成功', 1)
+            } else {
+                message.error(result.message, 1)
+            }
+        }
+        catch (e) {
+            message.error('网络请求失败', 1)
+        }
+        finally {
+            dispatch(getPageRequestEnd())
+        }
+    }
+}
+export const getUpdateIsFloorAction = (id, newIsFloor) => {
+    return async function (dispatch, getState) {
+        dispatch(getPageRequestStart())
+        const page = getState().get('category').get('current')
+        try {
+            const result = await api.updateCategoriesIsFloor({
+                id: id,
+                isFloor: newIsFloor,
+                page: page
+            })
+            if (result.code == 0) {
+                dispatch(setPage(result.data))
+                message.success('修改成功', 1)
+            } else {
+                message.error(result.message, 1)
+            }
+        }
+        catch (e) {
+            message.error('网络请求失败', 1)
+        }
+        finally {
+            dispatch(getPageRequestEnd())
+        }
+    }
+}
 export const setIcon = (payload) => ({
     type: types.SET_ICON,
     payload: payload
