@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Breadcrumb, Table, Switch, Button, Input } from 'antd';
+import { Layout, Breadcrumb, Table, Switch, Button, Input, InputNumber } from 'antd';
 import {Link} from 'react-router-dom'
 const { Content } = Layout;
 
@@ -24,6 +24,7 @@ class CategoryList extends Component {
             handleUpdateMobileName, 
             handleUpdateIsShow,
             handleUpdateIsFloor,
+            handleUpdateOrder,
         } = this.props
         const dataSource = list
         const columns = [
@@ -106,9 +107,22 @@ class CategoryList extends Component {
                 title: '排序',
                 dataIndex: 'order',
                 key: 'order',
+                width: '15%',
+                render: (order, record) => <InputNumber
+                    style={{ width: '80%' }}
+                    defaultValue={order}
+                    onBlur={ev => {
+                        if (ev.target.value != order) {
+                            handleUpdateOrder(record._id, ev.target.value)
+                        }
+                    }}
+                ></InputNumber>                   
             },
             {
                 title: '操作',
+                render:(text,record)=><span>
+                    <Link to={'/category/save/'+record._id}>修改</Link>
+                </span>
             },
         ];
         return (
@@ -189,6 +203,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     handleUpdateIsFloor: (id, newIsFloor) => {
         dispatch(actionCreator.getUpdateIsFloorAction(id, newIsFloor))
+    },
+    handleUpdateOrder: (id, newOrder) => {
+        dispatch(actionCreator.getUpdateOrderAction(id, newOrder))
     },          
 })
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)

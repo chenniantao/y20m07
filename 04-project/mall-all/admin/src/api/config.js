@@ -21,4 +21,5 @@ export const API_CONFIG = {
     updateCategoriesMobileName:         ['/categories/mobileName', 'put'],
     updateCategoriesIsShow:             ['/categories/isShow', 'put'],                      
     updateCategoriesIsFloor:            ['/categories/isFloor', 'put'],                      
+    updateCategoriesOrder:              ['/categories/order', 'put'],                      
 }
