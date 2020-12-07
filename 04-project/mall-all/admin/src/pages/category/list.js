@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Breadcrumb, Table, Switch, Button } from 'antd';
+import { Layout, Breadcrumb, Table, Switch, Button, Input } from 'antd';
 import {Link} from 'react-router-dom'
 const { Content } = Layout;
 
@@ -8,65 +8,68 @@ import CustomLayout from 'components/custom-layout'
 import { actionCreator } from './store';
 import { formatDate } from 'util'
 
-class User extends Component {
+class CategoryList extends Component {
     componentDidMount() {
-        //this.props.handlePage(1)
+        this.props.handlePage(1)
     }
     render() {
-        const { list, current, total, pageSize, handlePage, isFetching, handleUpdateIsActive } = this.props
+        const { 
+            list, 
+            current, 
+            total, 
+            pageSize, 
+            handlePage, 
+            isFetching, 
+            handleUpdateName 
+        } = this.props
         const dataSource = list
         const columns = [
             {
-                title: '用户名',
-                dataIndex: 'username',
-                key: 'username',
-            },
-            {
-                title: '是否管理员',
-                dataIndex: 'isAdmin',
-                key: 'isAdmin',
-                render: isAdmin => isAdmin ? '是' : '否'
-            },
-            {
-                title: '是否有效用户',
-                dataIndex: 'isActive',
-                key: 'isActive',
-                render: (isActive, record) => <Switch
-                    checkedChildren="是"
-                    unCheckedChildren="否"
-                    checked={isActive == '1' ? true : false}
-                    onChange={
-                        checked => {
-                            const newActive = checked ? '1' : '0'
-                            handleUpdateIsActive(record._id, newActive)
+                title: '分类名称',
+                dataIndex: 'name',
+                key: 'name',
+                width:'20%',
+                render:(name,record)=><Input
+                    style={{width:'60%'}}
+                    defaultValue={name}
+                    onBlur={ev=>{
+                        if (ev.target.value != name){
+                            handleUpdateName(record._id, ev.target.value)
                         }
-                    }
-                />
+                    }}
+                ></Input>
             },
             {
-                title: 'email',
-                dataIndex: 'email',
-                key: 'email',
+                title: '手机分类名称',
+                dataIndex: 'mobileName',
+                key: 'mobileName',
             },
             {
-                title: '手机',
-                dataIndex: 'phone',
-                key: 'phone',
+                title: '手机图标',
+                dataIndex: 'icon',
+                key: 'icon',
             },
             {
-                title: '微信openid',
-                dataIndex: 'wxopenid',
-                key: 'wxopenid',
+                title: '是否显示',
+                dataIndex: 'isShow',
+                key: 'isShow',
             },
             {
-                title: '注册时间',
-                dataIndex: 'createdAt',
-                key: 'createdAt',
-                render: createdAt => formatDate(createdAt)
+                title: '是否是楼层',
+                dataIndex: 'isFloor',
+                key: 'isFloor',
+            },
+            {
+                title: '排序',
+                dataIndex: 'order',
+                key: 'order',
+            },
+            {
+                title: '操作',
             },
         ];
         return (
-            <div className="User">
+            <div className="CategoryList">
                 <CustomLayout>
                     <div style={{
                         display: 'flex',
@@ -75,8 +78,8 @@ class User extends Component {
                     }}>
                         <Breadcrumb style={{ margin: '16px 0' }}>
                             <Breadcrumb.Item>首页</Breadcrumb.Item>
-                            <Breadcrumb.Item>用户</Breadcrumb.Item>
-                            <Breadcrumb.Item>用户列表</Breadcrumb.Item>
+                            <Breadcrumb.Item>分类</Breadcrumb.Item>
+                            <Breadcrumb.Item>分类列表</Breadcrumb.Item>
                         </Breadcrumb>
                         <Link to="/category/save">
                             <Button type='primary'>新增</Button>
@@ -122,18 +125,18 @@ class User extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    list: state.get('user').get('list'),
-    current: state.get('user').get('current'),
-    total: state.get('user').get('total'),
-    pageSize: state.get('user').get('pageSize'),
-    isFetching: state.get('user').get('isFetching'),
+    list: state.get('category').get('list'),
+    current: state.get('category').get('current'),
+    total: state.get('category').get('total'),
+    pageSize: state.get('category').get('pageSize'),
+    isFetching: state.get('category').get('isFetching'),
 })
 const mapDispatchToProps = (dispatch) => ({
     handlePage: (page) => {
         dispatch(actionCreator.getPageAction(page))
     },
-    handleUpdateIsActive: (id, newActive) => {
-        dispatch(actionCreator.getUpdateIsActive(id, newActive))
+    handleUpdateName: (id, newName) => {
+        dispatch(actionCreator.getUpdateNameAction(id, newName))
     }
 })
-export default connect(mapStateToProps, mapDispatchToProps)(User)
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)

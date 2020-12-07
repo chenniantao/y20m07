@@ -20,11 +20,13 @@ export const getPageAction = (page)=>{
     return async function (dispatch) {
         dispatch(getPageRequestStart())
         try{
-            const result = await api.getUserList({
+            const result = await api.getCategoryList({
                 page: page
             })
             if (result.code == 0) {
                 dispatch(setPage(result.data))
+            }else{
+                message.error(result.message)
             }
         }
         catch(e){
@@ -36,19 +38,21 @@ export const getPageAction = (page)=>{
     }
 }
 
-export const getUpdateIsActive = (id,newActive) => {
+export const getUpdateNameAction = (id,newName) => {
     return async function (dispatch,getState) {
         dispatch(getPageRequestStart())
-        const page = getState().get('user').get('current')
+        const page = getState().get('category').get('current')
         try {
-            const result = await api.updateUsersIsActive({
+            const result = await api.updateCategoriesName({
                 id: id,
-                isActive: newActive,
+                name: newName,
                 page:page
             })
             if (result.code == 0) {
                 dispatch(setPage(result.data))
                 message.success('修改成功',1)
+            }else{
+                message.error(result.message, 1)
             }
         }
         catch (e) {
