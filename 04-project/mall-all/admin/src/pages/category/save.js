@@ -25,12 +25,29 @@ import { CATEGORY_ICON_UPLOAD } from 'api/config'
 import { actionCreator } from './store';
 
 class CategorySave extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            id:this.props.match.params.categoryId
+        }
+    }
     componentDidMount(){
-        this.props.handleLevelCategories()
+        this.props.handleLevelCategories()    
+        if (this.state.id){
+            this.props.handleCategoriesDetail(this.state.id)
+        }
     }
     render() {    
-        const { handleIcon, handleValidate,iconValidate, handleSave, categories} = this.props   
+        const { 
+            handleIcon, 
+            handleValidate,
+            iconValidate, 
+            handleSave, 
+            categories,
+            category
+        } = this.props
         const options = categories.map(category => <Option key={category._id} value={category._id}>{category.name}</Option>)  
+        console.log(category.name)
         return (
             <div className="CategorySave">
                 <CustomLayout>
@@ -62,6 +79,7 @@ class CategorySave extends Component {
                                         message:'请选择父级分类'
                                     },
                                 ]}
+                                initialValue={category.pid}
                             >
                                 <Select
                                     placeholder="请选择父级分类"
@@ -81,6 +99,7 @@ class CategorySave extends Component {
                                         message: '请输入分类名称'
                                     },
                                 ]}
+                                initialValue={category.name}
                             >
                                 <Input />
                             </Form.Item>
@@ -93,6 +112,7 @@ class CategorySave extends Component {
                                         message: '请输入手机分类名称'
                                     },
                                 ]}
+                                initialValue={category.mobileName}
                             >
                                 <Input />
                             </Form.Item>
@@ -122,6 +142,7 @@ class CategorySave extends Component {
 const mapStateToProps = (state) => ({
     iconValidate: state.get('category').get('iconValidate'),
     categories: state.get('category').get('categories'),
+    category: state.get('category').get('category')
 })
 const mapDispatchToProps = (dispatch) => ({
     handleIcon: (icon) => {
@@ -136,6 +157,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     handleLevelCategories:()=>{
         dispatch(actionCreator.getLevelCategoriesAction())
+    },
+    handleCategoriesDetail:(id)=>{
+        dispatch(actionCreator.getCategoriesDetailAction(id))
     }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(CategorySave)
