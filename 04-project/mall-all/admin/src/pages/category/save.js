@@ -24,17 +24,28 @@ import UploadImage from 'components/upload-image'
 import { CATEGORY_ICON_UPLOAD } from 'api/config'
 import { actionCreator } from './store';
 
+import api from 'api'
+
 class CategorySave extends Component {
     constructor(props){
         super(props)
         this.state={
             id:this.props.match.params.categoryId
         }
+        this.formRef = React.createRef()
     }
-    componentDidMount(){
+    async componentDidMount(){
         this.props.handleLevelCategories()    
         if (this.state.id){
-            this.props.handleCategoriesDetail(this.state.id)
+            const result = await api.getCategoriesDetail({ id: this.state.id})
+            if(result.code == 0){
+                const data = result.data
+                this.formRef.current.setFieldsValue({
+                    pid:data.pid,
+                    name: data.name,
+                    mobileName:data.mobileName
+                })
+            }
         }
     }
     render() {    
@@ -43,11 +54,9 @@ class CategorySave extends Component {
             handleValidate,
             iconValidate, 
             handleSave, 
-            categories,
-            category
+            categories
         } = this.props
         const options = categories.map(category => <Option key={category._id} value={category._id}>{category.name}</Option>)  
-        console.log(category.name)
         return (
             <div className="CategorySave">
                 <CustomLayout>
@@ -69,6 +78,7 @@ class CategorySave extends Component {
                             name="control-hooks" 
                             onFinish={handleSave}
                             onFinishFailed={handleValidate}
+                            ref={this.formRef}
                         >
                             <Form.Item
                                 name="pid"
@@ -79,7 +89,6 @@ class CategorySave extends Component {
                                         message:'请选择父级分类'
                                     },
                                 ]}
-                                initialValue={category.pid}
                             >
                                 <Select
                                     placeholder="请选择父级分类"
@@ -99,7 +108,6 @@ class CategorySave extends Component {
                                         message: '请输入分类名称'
                                     },
                                 ]}
-                                initialValue={category.name}
                             >
                                 <Input />
                             </Form.Item>
@@ -112,7 +120,6 @@ class CategorySave extends Component {
                                         message: '请输入手机分类名称'
                                     },
                                 ]}
-                                initialValue={category.mobileName}
                             >
                                 <Input />
                             </Form.Item>
@@ -157,9 +164,6 @@ const mapDispatchToProps = (dispatch) => ({
     },
     handleLevelCategories:()=>{
         dispatch(actionCreator.getLevelCategoriesAction())
-    },
-    handleCategoriesDetail:(id)=>{
-        dispatch(actionCreator.getCategoriesDetailAction(id))
     }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(CategorySave)

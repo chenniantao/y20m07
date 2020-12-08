@@ -12,8 +12,7 @@ const defaultState = fromJS({
     iconValidate:{
         help:'',
         validateStatus:''
-    },
-    category:{}
+    }
 })
 
 function reducer(state = defaultState, action) {
@@ -49,10 +48,7 @@ function reducer(state = defaultState, action) {
     } 
     if (action.type == types.SET_CATEGORIES) {
         return state.set('categories', action.payload)
-    }
-    if (action.type == types.SET_CATEGORIES_DETAIL){
-        return state.set('category', action.payload)
-    }         
+    }       
     return state
 }
 
