@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Breadcrumb, Form, Input, Button, Select,Upload } from 'antd';
+import { Layout, Breadcrumb, Form, Input, Button, Select } from 'antd';
 const { Content } = Layout;
 const { Option } = Select;
 const layout = {
@@ -72,7 +72,6 @@ class CategorySave extends Component {
         }else{
             fileList = []
         }
-        console.log(fileList)
         return (
             <div className="CategorySave">
                 <CustomLayout>

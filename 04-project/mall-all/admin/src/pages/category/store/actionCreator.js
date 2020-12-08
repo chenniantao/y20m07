@@ -15,7 +15,13 @@ const setPage = (payload)=>({
     type: types.SET_PAGE,
     payload: payload
 })
-
+const setIconError = () => ({
+    type: types.SET_ICON_ERROR
+})
+const setCategoies = (payload) => ({
+    type: types.SET_CATEGORIES,
+    payload: payload
+})
 export const getPageAction = (page)=>{
     return async function (dispatch) {
         dispatch(getPageRequestStart())
@@ -165,13 +171,6 @@ export const getUpdateOrderAction = (id, newOrder) => {
 }
 export const setIcon = (payload) => ({
     type: types.SET_ICON,
-    payload: payload
-})
-const setIconError = () => ({
-    type: types.SET_ICON_ERROR
-})
-const setCategoies = (payload) => ({
-    type: types.SET_CATEGORIES,
     payload: payload
 })
 export const getSaveAction = (values,id) => {

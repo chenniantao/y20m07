@@ -23,5 +23,11 @@ export const API_CONFIG = {
     updateCategoriesIsShow:             ['/categories/isShow', 'put'],                      
     updateCategoriesIsFloor:            ['/categories/isFloor', 'put'],                      
     updateCategoriesOrder:              ['/categories/order', 'put'],                      
-    getCategoriesDetail:                ['/categories/detail', 'get'],                      
+    getCategoriesDetail:                ['/categories/detail', 'get'], 
+    
+    addAttr:                            ['/attrs', 'post'],
+    updateAttr:                         ['/attrs', 'put'],
+    getAttrList:                        ['/attrs/list', 'get'],
+    updateAttrsOrder:                   ['/attrs/order', 'put'],
+    getAttrsDetail:                     ['/attrs/detail', 'get'],      
 }

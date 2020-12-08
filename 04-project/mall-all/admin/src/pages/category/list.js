@@ -6,7 +6,6 @@ const { Content } = Layout;
 
 import CustomLayout from 'components/custom-layout'
 import { actionCreator } from './store';
-import { formatDate } from 'util'
 
 class CategoryList extends Component {
     componentDidMount() {

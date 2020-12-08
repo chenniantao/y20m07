@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Layout, Menu } from 'antd';
-import { UserOutlined, HomeOutlined, InsertRowLeftOutlined } from '@ant-design/icons';
+import { UserOutlined, HomeOutlined, InsertRowLeftOutlined,OneToOneOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
 
@@ -27,6 +27,9 @@ export default class CustomSider extends Component {
                         <Menu.Item key="3">
                             <NavLink to="/category"><InsertRowLeftOutlined /> 分类管理</NavLink>
                         </Menu.Item>
+                        <Menu.Item key="4">
+                            <NavLink to="/attr"><OneToOneOutlined /> 属性管理</NavLink>
+                        </Menu.Item>                        
                     </Menu>
                 </Sider>
             </div>
