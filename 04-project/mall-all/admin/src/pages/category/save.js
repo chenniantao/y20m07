@@ -107,8 +107,6 @@ class CategorySave extends Component {
                             >
                                 <Select
                                     placeholder="请选择父级分类"
-                                    onChange={() => { }}
-                                    allowClear
                                 >
                                     <Option value="0">根分类</Option>
                                     {options}
