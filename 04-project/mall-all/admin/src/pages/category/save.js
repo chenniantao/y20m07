@@ -92,7 +92,7 @@ class CategorySave extends Component {
                         <Form 
                             {...layout} 
                             name="control-hooks" 
-                            onFinish={handleSave}
+                            onFinish={(values) => handleSave(values,this.state.id)}
                             onFinishFailed={handleValidate}
                             ref={this.formRef}
                         >
@@ -172,8 +172,8 @@ const mapDispatchToProps = (dispatch) => ({
     handleIcon: (icon) => {
         dispatch(actionCreator.setIcon(icon))
     },
-    handleSave:(values)=>{
-        dispatch(actionCreator.getSaveAction(values))
+    handleSave:(values,id)=>{
+        dispatch(actionCreator.getSaveAction(values,id))
     },
     handleValidate: ({ values})=>{
         console.log(values)

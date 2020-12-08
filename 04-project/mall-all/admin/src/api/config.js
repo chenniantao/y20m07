@@ -14,7 +14,8 @@ export const API_CONFIG = {
     getUserList:                        ['/users/list', 'get'],
     updateUsersIsActive:                ['/users/isActive', 'put'],
     
-    addCategory:                        ['/categories', 'post'],         
+    addCategory:                        ['/categories', 'post'],
+    updateCategory:                     ['/categories', 'put'],                
     getLevelCategories:                 ['/categories/levelCategories', 'get'],
     getCategoryList:                    ['/categories/list', 'get'], 
     updateCategoriesName:               ['/categories/name', 'put'],
