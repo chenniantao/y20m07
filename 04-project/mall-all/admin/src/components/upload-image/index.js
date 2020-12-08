@@ -49,7 +49,21 @@ class UploadImage extends Component{
             previewTitle: file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
         });
     };
-
+    static getDerivedStateFromProps(props, state){
+        if (state.fileList.length > 0){//更新时不更改state
+            return null
+        } else {//根据父组件的fileList初始化state中的fileList
+            return {
+                fileList: props.fileList
+            }
+        }
+    }
+    componentDidMount(){
+        //针对修改后再添加是初始化
+        this.setState({
+            fileList:[]
+        })
+    }
     handleChange({ fileList }){
         const imageUrlList = fileList.map(item=>{
             if (item.response && item.response.status == 'done'){

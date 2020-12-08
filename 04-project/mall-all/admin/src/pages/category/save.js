@@ -45,7 +45,10 @@ class CategorySave extends Component {
                     name: data.name,
                     mobileName:data.mobileName
                 })
+                this.props.handleIcon(data.icon)
             }
+        }else{
+            this.props.handleIcon('')
         }
     }
     render() {    
@@ -54,16 +57,29 @@ class CategorySave extends Component {
             handleValidate,
             iconValidate, 
             handleSave, 
-            categories
+            categories,
+            icon
         } = this.props
         const options = categories.map(category => <Option key={category._id} value={category._id}>{category.name}</Option>)  
+        let fileList = []
+        if(icon){
+            fileList.push({
+                uid: '-1',
+                name: 'image.png',
+                status: 'done',
+                url: icon,
+            })
+        }else{
+            fileList = []
+        }
+        console.log(fileList)
         return (
             <div className="CategorySave">
                 <CustomLayout>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                         <Breadcrumb.Item>首页</Breadcrumb.Item>
                         <Breadcrumb.Item>分类</Breadcrumb.Item>
-                        <Breadcrumb.Item>添加分类</Breadcrumb.Item>                                                
+                        <Breadcrumb.Item>{this.state.id ? '编辑分类' : '添加分类'}</Breadcrumb.Item>                                                
                     </Breadcrumb>
                     <Content
                         className="site-layout-background"
@@ -132,6 +148,7 @@ class CategorySave extends Component {
                                     max={1}
                                     action={CATEGORY_ICON_UPLOAD}
                                     getImageUrlList={handleIcon}
+                                    fileList={fileList}
                                 />
                             </Form.Item>                                                         
                             <Form.Item {...tailLayout}>
@@ -149,7 +166,7 @@ class CategorySave extends Component {
 const mapStateToProps = (state) => ({
     iconValidate: state.get('category').get('iconValidate'),
     categories: state.get('category').get('categories'),
-    category: state.get('category').get('category')
+    icon: state.get('category').get('icon')
 })
 const mapDispatchToProps = (dispatch) => ({
     handleIcon: (icon) => {
