@@ -41,24 +41,21 @@ class AttrSave extends Component {
     }
     handleChange(nextTargetKeys, direction, moveKeys){
         this.setState({ targetKeys: nextTargetKeys });
-
-        console.log('targetKeys: ', nextTargetKeys);
-        console.log('direction: ', direction);
-        console.log('moveKeys: ', moveKeys);
     };
 
     handleSelectChange (sourceSelectedKeys, targetSelectedKeys){
         this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });
-
-        console.log('sourceSelectedKeys: ', sourceSelectedKeys);
-        console.log('targetSelectedKeys: ', targetSelectedKeys);
     };
     componentDidMount(){
+        //获取分类
         this.props.handleLevelCategories() 
+        //获取属性
+        this.props.handleAllAttrs()
     }    
     render() {    
         const { 
             categories,
+            allAttrs,
             handleSave, 
         } = this.props
         const {
@@ -66,6 +63,7 @@ class AttrSave extends Component {
             selectedKeys
         } = this.state
         const options = categories.map(cate => <Option key={cate._id} value={cate._id}>{cate.name}</Option>)
+        const dataSource = allAttrs.map(attr => ({ key: attr._id, title: attr.name }))
         return (
             <div className="AttrSave">
                 <CustomLayout>
@@ -85,8 +83,19 @@ class AttrSave extends Component {
                         <Form 
                             {...layout} 
                             name="control-hooks" 
-                            onFinish={(values) => handleSave(values,this.state.id)}
                             ref={this.formRef}
+                            initialValues={{
+                                price:0,
+                                stock:0,
+                                payNums:0
+                            }}
+                            onFinish={(values) => {
+                                if(targetKeys.length > 0){
+                                    values.attrs = targetKeys.join(',')
+                                }
+                                console.log(values)
+                                handleSave(values, this.state.id)
+                            }}
                         >
                             <Form.Item
                                 name="category"
@@ -138,7 +147,7 @@ class AttrSave extends Component {
                                     },
                                 ]}
                             >
-                                <InputNumber />
+                                <InputNumber min={0}  />
                             </Form.Item>
                             <Form.Item
                                 name="stock"
@@ -150,20 +159,20 @@ class AttrSave extends Component {
                                     },
                                 ]}
                             >
-                                <InputNumber />
+                                <InputNumber min={0}  />
                             </Form.Item> 
                             <Form.Item
                                 name="payNums"
                                 label="支付人数"
                             >
-                                <InputNumber />
+                                <InputNumber min={0}  />
                             </Form.Item>
                             <Form.Item
                                 name="attrs"
                                 label="商品属性"
                             >
                                 <Transfer
-                                    dataSource={[{ key: '0', title: '服装尺寸' }, { key: '1', title: '电脑颜色' }]}
+                                    dataSource={dataSource}
                                     titles={['未选属性', '已选属性']}
                                     targetKeys={targetKeys}
                                     selectedKeys={selectedKeys}
@@ -214,6 +223,7 @@ class AttrSave extends Component {
 }
 const mapStateToProps = (state) => ({
     categories: state.get('product').get('categories'),
+    allAttrs: state.get('product').get('allAttrs'),
 })
 const mapDispatchToProps = (dispatch) => ({
     handleSave:(values,id)=>{
@@ -222,6 +232,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     handleLevelCategories: () => {
         dispatch(actionCreator.getLevelCategoriesAction())
+    },
+    handleAllAttrs:()=>{
+        dispatch(actionCreator.getAllAttrsAction())
     }    
 })
 export default connect(mapStateToProps, mapDispatchToProps)(AttrSave)

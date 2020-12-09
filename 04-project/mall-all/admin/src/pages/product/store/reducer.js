@@ -8,6 +8,7 @@ const defaultState = fromJS({
     list: [],
     isFetching:false,
     categories: [],
+    allAttrs:[]
 })
 
 function reducer(state = defaultState, action) {
@@ -28,7 +29,10 @@ function reducer(state = defaultState, action) {
     }
     if (action.type == types.SET_CATEGORIES) {
         return state.set('categories', action.payload)
-    }     
+    }
+    if (action.type == types.SET_ALL_ATTRS) {
+        return state.set('allAttrs', action.payload)
+    }           
     return state
 }
 

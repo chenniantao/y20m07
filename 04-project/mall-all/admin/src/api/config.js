@@ -29,5 +29,6 @@ export const API_CONFIG = {
     updateAttr:                         ['/attrs', 'put'],
     getAttrList:                        ['/attrs/list', 'get'],
     updateAttrsOrder:                   ['/attrs/order', 'put'],
-    getAttrsDetail:                     ['/attrs/detail', 'get'],      
+    getAttrsDetail:                     ['/attrs/detail', 'get'],  
+    getAllAttrs:                        ['/attrs/allAttrs', 'get'],    
 }

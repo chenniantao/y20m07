@@ -19,6 +19,10 @@ const setCategoies = (payload) => ({
     type: types.SET_CATEGORIES,
     payload: payload
 })
+const setAllAttrs = (payload) => ({
+    type: types.SET_ALL_ATTRS,
+    payload: payload
+})
 export const getPageAction = (page) => {
     return async function (dispatch) {
         dispatch(getPageRequestStart())
@@ -97,6 +101,19 @@ export const getLevelCategoriesAction = () => {
             })
             if (result.code == 0) {
                 dispatch(setCategoies(result.data))
+            }
+        }
+        catch (e) {
+            message.error('网络请求失败', 1)
+        }
+    }
+}
+export const getAllAttrsAction = () => {
+    return async function (dispatch) {
+        try {
+            const result = await api.getAllAttrs()
+            if (result.code == 0) {
+                dispatch(setAllAttrs(result.data))
             }
         }
         catch (e) {
