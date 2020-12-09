@@ -7,6 +7,7 @@ const defaultState = fromJS({
     pageSize: 0,
     list: [],
     isFetching:false,
+    categories: [],
 })
 
 function reducer(state = defaultState, action) {
@@ -24,7 +25,10 @@ function reducer(state = defaultState, action) {
     }
     if (action.type == types.PAGE_REQUEST_END) {
         return state.set('isFetching', false)
-    }    
+    }
+    if (action.type == types.SET_CATEGORIES) {
+        return state.set('categories', action.payload)
+    }     
     return state
 }
 

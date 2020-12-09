@@ -15,6 +15,10 @@ const setPage = (payload) => ({
     type: types.SET_PAGE,
     payload: payload
 })
+const setCategoies = (payload) => ({
+    type: types.SET_CATEGORIES,
+    payload: payload
+})
 export const getPageAction = (page) => {
     return async function (dispatch) {
         dispatch(getPageRequestStart())
@@ -81,6 +85,21 @@ export const getSaveAction = (values, id) => {
         }
         catch (e) {
             console.log(e)
+            message.error('网络请求失败', 1)
+        }
+    }
+}
+export const getLevelCategoriesAction = () => {
+    return async function (dispatch) {
+        try {
+            const result = await api.getLevelCategories({
+                level: 3
+            })
+            if (result.code == 0) {
+                dispatch(setCategoies(result.data))
+            }
+        }
+        catch (e) {
             message.error('网络请求失败', 1)
         }
     }

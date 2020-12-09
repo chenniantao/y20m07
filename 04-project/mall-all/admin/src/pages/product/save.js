@@ -52,16 +52,20 @@ class AttrSave extends Component {
 
         console.log('sourceSelectedKeys: ', sourceSelectedKeys);
         console.log('targetSelectedKeys: ', targetSelectedKeys);
-    };    
+    };
+    componentDidMount(){
+        this.props.handleLevelCategories() 
+    }    
     render() {    
         const { 
+            categories,
             handleSave, 
         } = this.props
         const {
             targetKeys,
             selectedKeys
         } = this.state
-        const options = [<Option key="0" value="0">根分类</Option>]
+        const options = categories.map(cate => <Option key={cate._id} value={cate._id}>{cate.name}</Option>)
         return (
             <div className="AttrSave">
                 <CustomLayout>
@@ -209,12 +213,15 @@ class AttrSave extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-
+    categories: state.get('product').get('categories'),
 })
 const mapDispatchToProps = (dispatch) => ({
     handleSave:(values,id)=>{
         console.log(values)
         //dispatch(actionCreator.getSaveAction(values,id))
     },
+    handleLevelCategories: () => {
+        dispatch(actionCreator.getLevelCategoriesAction())
+    }    
 })
 export default connect(mapStateToProps, mapDispatchToProps)(AttrSave)

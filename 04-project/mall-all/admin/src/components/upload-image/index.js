@@ -30,7 +30,8 @@ class UploadImage extends Component{
             previewVisible: false,
             previewImage: '',
             previewTitle: '',
-            fileList:[]
+            fileList:[],
+            isUpdate:false
         }
         this.handleCancel = this.handleCancel.bind(this)
         this.handlePreview = this.handlePreview.bind(this)
@@ -50,19 +51,13 @@ class UploadImage extends Component{
         });
     };
     static getDerivedStateFromProps(props, state){
-        if (state.fileList.length > 0){//更新时不更改state
+        if (state.isUpdate){//更新时不更改state
             return null
         } else {//根据父组件的fileList初始化state中的fileList
             return {
                 fileList: props.fileList
             }
         }
-    }
-    componentDidMount(){
-        //针对修改后再添加是初始化
-        this.setState({
-            fileList:[]
-        })
     }
     handleChange({ fileList }){
         const imageUrlList = fileList.map(item=>{
@@ -72,7 +67,8 @@ class UploadImage extends Component{
         }).join(',')
         this.props.getImageUrlList(imageUrlList)
         this.setState({
-            fileList: fileList
+            fileList: fileList,
+            isUpdate:true
         })
     }    
     render(){

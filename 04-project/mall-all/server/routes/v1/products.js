@@ -256,12 +256,21 @@ router.post("/images",upload.single('file'),(req,res)=>{
 })
 
 //处理商品详情图片
+/*
 router.post("/detailImages",upload.single('upload'),(req,res)=>{
 	const filePath = UPLOAD_HOST + '/product-images/'+req.file.filename;
 	res.json({
 		  "success": true,
 		  "msg": "上传成功",
 		  "file_path": filePath
+	});
+})
+*/
+router.post("/detailImages", upload.single('upload'), (req, res) => {
+	const filePath = UPLOAD_HOST + '/product-images/' + req.file.filename;
+	res.json({
+		uploaded: true,
+		url: filePath
 	});
 })
 
