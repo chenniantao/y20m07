@@ -15,9 +15,7 @@ const setPage = (payload)=>({
     type: types.SET_PAGE,
     payload: payload
 })
-const setIconError = () => ({
-    type: types.SET_ICON_ERROR
-})
+
 const setCategoies = (payload) => ({
     type: types.SET_CATEGORIES,
     payload: payload
@@ -169,19 +167,10 @@ export const getUpdateOrderAction = (id, newOrder) => {
         }
     }
 }
-export const setIcon = (payload) => ({
-    type: types.SET_ICON,
-    payload: payload
-})
+
 export const getSaveAction = (values,id) => {
     return async function (dispatch, getState) {
         try {
-            const icon = getState().get('category').get('icon')
-            if (!icon) {
-                dispatch(setIconError())
-                return
-            }
-            values.icon = icon
             let request = api.addCategory
             let actionMessage = '添加分类成功'
             if(id){
@@ -199,15 +188,6 @@ export const getSaveAction = (values,id) => {
         }
         catch (e) {
             message.error('网络请求失败', 1)
-        }
-    }
-}
-export const getValidateAction = () => {
-    return  function (dispatch, getState) {
-        const icon = getState().get('category').get('icon')
-        if (!icon) {
-            dispatch(setIconError())
-            return
         }
     }
 }

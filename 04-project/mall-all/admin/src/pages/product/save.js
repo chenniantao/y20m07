@@ -21,23 +21,37 @@ const tailLayout = {
 import CustomLayout from 'components/custom-layout'
 import UploadImage from 'components/upload-image'
 
-import { CATEGORY_ICON_UPLOAD } from 'api/config'
+import { PRODUCT_IMAGE_UPLOAD } from 'api/config'
 
 import { actionCreator } from './store';
 
 import api from 'api'
 
-class AttrSave extends Component {
+class ProductSave extends Component {
     constructor(props){
         super(props)
         this.state={
             id:this.props.match.params.productId,
             targetKeys:[],
-            selectedKeys:[]
+            selectedKeys:[],
+            mainImage: '',
+            mainImageValidate: {
+                help: '',
+                validateStatus: ''
+            },
+            images: '',
+            imagesValidate: {
+                help: '',
+                validateStatus: ''
+            },
         }
         this.formRef = React.createRef()
         this.handleChange = this.handleChange.bind(this)
         this.handleSelectChange = this.handleSelectChange.bind(this)
+        this.handleMainImage = this.handleMainImage.bind(this)
+        this.handleImages = this.handleImages.bind(this)
+        this.handleFinish = this.handleFinish.bind(this)
+        this.handleValidate = this.handleValidate.bind(this)
     }
     handleChange(nextTargetKeys, direction, moveKeys){
         this.setState({ targetKeys: nextTargetKeys });
@@ -46,6 +60,55 @@ class AttrSave extends Component {
     handleSelectChange (sourceSelectedKeys, targetSelectedKeys){
         this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });
     };
+    handleMainImage(image){
+        this.setState({
+            mainImage: image,
+            mainImageValidate: {
+                help: '',
+                validateStatus: ''
+            }
+        })
+    }
+    handleImages(images){
+        this.setState({
+            images: images,
+            imagesValidate: {
+                help: '',
+                validateStatus: ''
+            },
+        })
+    }
+    handleFinish(values){
+        const { targetKeys, id, mainImage, images } = this.state
+        if (targetKeys.length > 0) {
+            values.attrs = targetKeys.join(',')
+        }
+        this.handleValidate()
+        if (mainImage && images){
+            values.mainImage = mainImage
+            values.images = images
+            this.props.handleSave(values, id)
+        }
+    }
+    handleValidate(){
+        const { mainImage, images } = this.state
+        if (!mainImage) {
+            this.setState({
+                mainImageValidate: {
+                    help: '请上传封面图片',
+                    validateStatus: 'error'
+                },
+            })
+        }
+        if (!images) {
+            this.setState({
+                imagesValidate: {
+                    help: '请上传商品图片',
+                    validateStatus: 'error'
+                },
+            })
+        }
+    }
     componentDidMount(){
         //获取分类
         this.props.handleLevelCategories() 
@@ -56,16 +119,17 @@ class AttrSave extends Component {
         const { 
             categories,
             allAttrs,
-            handleSave, 
         } = this.props
         const {
             targetKeys,
-            selectedKeys
+            selectedKeys,
+            mainImageValidate,
+            imagesValidate,
         } = this.state
         const options = categories.map(cate => <Option key={cate._id} value={cate._id}>{cate.name}</Option>)
         const dataSource = allAttrs.map(attr => ({ key: attr._id, title: attr.name }))
         return (
-            <div className="AttrSave">
+            <div className="ProductSave">
                 <CustomLayout>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                         <Breadcrumb.Item>首页</Breadcrumb.Item>
@@ -89,13 +153,8 @@ class AttrSave extends Component {
                                 stock:0,
                                 payNums:0
                             }}
-                            onFinish={(values) => {
-                                if(targetKeys.length > 0){
-                                    values.attrs = targetKeys.join(',')
-                                }
-                                console.log(values)
-                                handleSave(values, this.state.id)
-                            }}
+                            onFinish={this.handleFinish}
+                            onFinishFailed={this.handleValidate}
                         >
                             <Form.Item
                                 name="category"
@@ -185,22 +244,24 @@ class AttrSave extends Component {
                             <Form.Item
                                 label="封面图片"
                                 required={true}
+                                {...mainImageValidate}
                             >
                                 <UploadImage
                                     max={1}
-                                    action={CATEGORY_ICON_UPLOAD}
-                                    getImageUrlList={()=>{}}
+                                    action={PRODUCT_IMAGE_UPLOAD}
+                                    getImageUrlList={this.handleMainImage}
                                     fileList={[]}
                                 />
                             </Form.Item>
                             <Form.Item
                                 label="商品图片"
                                 required={true}
+                                {...imagesValidate}
                             >
                                 <UploadImage
                                     max={3}
-                                    action={CATEGORY_ICON_UPLOAD}
-                                    getImageUrlList={()=>{}}
+                                    action={PRODUCT_IMAGE_UPLOAD}
+                                    getImageUrlList={this.handleImages}
                                     fileList={[]}
                                 />
                             </Form.Item>
@@ -223,7 +284,7 @@ class AttrSave extends Component {
 }
 const mapStateToProps = (state) => ({
     categories: state.get('product').get('categories'),
-    allAttrs: state.get('product').get('allAttrs'),
+    allAttrs: state.get('product').get('allAttrs'),       
 })
 const mapDispatchToProps = (dispatch) => ({
     handleSave:(values,id)=>{
@@ -235,6 +296,6 @@ const mapDispatchToProps = (dispatch) => ({
     },
     handleAllAttrs:()=>{
         dispatch(actionCreator.getAllAttrsAction())
-    }    
+    },         
 })
-export default connect(mapStateToProps, mapDispatchToProps)(AttrSave)
+export default connect(mapStateToProps, mapDispatchToProps)(ProductSave)

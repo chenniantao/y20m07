@@ -30,8 +30,16 @@ class CategorySave extends Component {
     constructor(props){
         super(props)
         this.state={
-            id:this.props.match.params.categoryId
+            id:this.props.match.params.categoryId,
+            icon: '',
+            iconValidate: {
+                help: '',
+                validateStatus: ''
+            }
         }
+        this.handleIcon = this.handleIcon.bind(this)
+        this.handleFinish = this.handleFinish.bind(this)
+        this.handleValidate = this.handleValidate.bind(this)
         this.formRef = React.createRef()
     }
     async componentDidMount(){
@@ -45,21 +53,49 @@ class CategorySave extends Component {
                     name: data.name,
                     mobileName:data.mobileName
                 })
-                this.props.handleIcon(data.icon)
+                this.setState({
+                    icon:data.icon
+                })
             }
         }else{
-            this.props.handleIcon('')
+            this.setState({
+                icon: ''
+            })
+        }
+    }
+    handleIcon(icon){
+        this.setState({
+            icon: icon,
+            iconValidate: {
+                help: '',
+                validateStatus: ''
+            }
+        })
+    }
+    handleFinish(values){
+        const { icon,id} = this.state
+        this.handleValidate()
+        if(icon){
+            values.icon = icon
+            this.props.handleSave(values,id)
+        }
+    }
+    handleValidate(){
+        const { icon } = this.state
+        if(!icon){
+            this.setState({
+                iconValidate: {
+                    help: '请上传手机图标',
+                    validateStatus: 'error'
+                }
+            })
         }
     }
     render() {    
         const { 
-            handleIcon, 
-            handleValidate,
-            iconValidate, 
-            handleSave, 
             categories,
-            icon
         } = this.props
+        const { iconValidate, icon}  = this.state
         const options = categories.map(category => <Option key={category._id} value={category._id}>{category.name}</Option>)  
         let fileList = []
         if(icon){
@@ -91,8 +127,8 @@ class CategorySave extends Component {
                         <Form 
                             {...layout} 
                             name="control-hooks" 
-                            onFinish={(values) => handleSave(values,this.state.id)}
-                            onFinishFailed={handleValidate}
+                            onFinish={this.handleFinish}
+                            onFinishFailed={this.handleValidate}
                             ref={this.formRef}
                         >
                             <Form.Item
@@ -139,12 +175,12 @@ class CategorySave extends Component {
                             <Form.Item
                                 label="手机分类图标"
                                 required={true}
-                                {...iconValidate.toJS()}
+                                {...iconValidate}
                             >
                                 <UploadImage 
                                     max={1}
                                     action={CATEGORY_ICON_UPLOAD}
-                                    getImageUrlList={handleIcon}
+                                    getImageUrlList={this.handleIcon}
                                     fileList={fileList}
                                 />
                             </Form.Item>                                                         
@@ -161,20 +197,11 @@ class CategorySave extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    iconValidate: state.get('category').get('iconValidate'),
     categories: state.get('category').get('categories'),
-    icon: state.get('category').get('icon')
 })
 const mapDispatchToProps = (dispatch) => ({
-    handleIcon: (icon) => {
-        dispatch(actionCreator.setIcon(icon))
-    },
     handleSave:(values,id)=>{
         dispatch(actionCreator.getSaveAction(values,id))
-    },
-    handleValidate: ({ values})=>{
-        console.log(values)
-        dispatch(actionCreator.getValidateAction())
     },
     handleLevelCategories:()=>{
         dispatch(actionCreator.getLevelCategoriesAction())

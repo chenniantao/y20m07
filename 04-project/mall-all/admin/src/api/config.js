@@ -4,6 +4,7 @@ export const SERVER =  process.env.NODE_ENV == 'production' ? 'http://api.sortma
 export const VERSION = 'v1'
 
 export const CATEGORY_ICON_UPLOAD = SERVER + '/' + VERSION + '/categories/icons'
+export const PRODUCT_IMAGE_UPLOAD = SERVER + '/' + VERSION + '/products/images'
 
 export const API_CONFIG = {
     //方法名称:                          [请求地址,请求方法]

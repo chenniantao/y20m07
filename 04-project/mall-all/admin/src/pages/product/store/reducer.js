@@ -32,7 +32,7 @@ function reducer(state = defaultState, action) {
     }
     if (action.type == types.SET_ALL_ATTRS) {
         return state.set('allAttrs', action.payload)
-    }           
+    }                 
     return state
 }
 
