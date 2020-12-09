@@ -9,7 +9,7 @@ import { actionCreator } from './store';
 
 class ProductList extends Component {
     componentDidMount() {
-        //this.props.handlePage(1)
+        this.props.handlePage(1)
     }
     render() {
         const { 

@@ -27,7 +27,7 @@ export const getPageAction = (page) => {
     return async function (dispatch) {
         dispatch(getPageRequestStart())
         try {
-            const result = await api.getAttrList({
+            const result = await api.getProductList({
                 page: page
             })
             if (result.code == 0) {
@@ -70,14 +70,13 @@ export const getUpdateOrderAction = (id, newOrder) => {
         }
     }
 }
-export const getSaveAction = (values, id) => {
-    return async function (dispatch, getState) {
+export const getSaveAction = (values) => {
+    return async function () {
         try {
-            let request = api.addAttr
-            let actionMessage = '添加属性成功'
-            if (id) {
-                values.id = id
-                request = api.updateAttr
+            let request = api.addProduct
+            let actionMessage = '添加商品成功'
+            if (values.id) {
+                request = api.updateProduct
                 actionMessage = '修改属性成功'
             }
             const result = await request(values)

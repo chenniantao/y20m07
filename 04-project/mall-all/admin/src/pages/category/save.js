@@ -77,7 +77,8 @@ class CategorySave extends Component {
         this.handleValidate()
         if(icon){
             values.icon = icon
-            this.props.handleSave(values,id)
+            values.id = id
+            this.props.handleSave(values)
         }
     }
     handleValidate(){
@@ -200,8 +201,8 @@ const mapStateToProps = (state) => ({
     categories: state.get('category').get('categories'),
 })
 const mapDispatchToProps = (dispatch) => ({
-    handleSave:(values,id)=>{
-        dispatch(actionCreator.getSaveAction(values,id))
+    handleSave:(values)=>{
+        dispatch(actionCreator.getSaveAction(values))
     },
     handleLevelCategories:()=>{
         dispatch(actionCreator.getLevelCategoriesAction())

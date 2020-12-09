@@ -33,6 +33,8 @@
     "webpack-merge": "^5.4.0"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^23.1.0",
+    "@ckeditor/ckeditor5-react": "^3.0.0",
     "antd": "^4.8.5",
     "axios": "^0.21.0",
     "immutable": "^4.0.0-rc.12",

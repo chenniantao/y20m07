@@ -168,13 +168,12 @@ export const getUpdateOrderAction = (id, newOrder) => {
     }
 }
 
-export const getSaveAction = (values,id) => {
+export const getSaveAction = (values) => {
     return async function (dispatch, getState) {
         try {
             let request = api.addCategory
             let actionMessage = '添加分类成功'
-            if(id){
-                values.id = id
+            if (values.id){
                 request = api.updateCategory
                 actionMessage = '修改分类成功'
             }

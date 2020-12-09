@@ -20,8 +20,10 @@ const tailLayout = {
 
 import CustomLayout from 'components/custom-layout'
 import UploadImage from 'components/upload-image'
+import RichEditor from 'components/rich-editor'
 
-import { PRODUCT_IMAGE_UPLOAD } from 'api/config'
+import { PRODUCT_IMAGE_UPLOAD, PRODUCT_DETAIL_IMAGES_UPLOAD } from 'api/config'
+
 
 import { actionCreator } from './store';
 
@@ -44,6 +46,7 @@ class ProductSave extends Component {
                 help: '',
                 validateStatus: ''
             },
+            detail:''
         }
         this.formRef = React.createRef()
         this.handleChange = this.handleChange.bind(this)
@@ -52,6 +55,7 @@ class ProductSave extends Component {
         this.handleImages = this.handleImages.bind(this)
         this.handleFinish = this.handleFinish.bind(this)
         this.handleValidate = this.handleValidate.bind(this)
+        this.handleDetail = this.handleDetail.bind(this)
     }
     handleChange(nextTargetKeys, direction, moveKeys){
         this.setState({ targetKeys: nextTargetKeys });
@@ -79,7 +83,7 @@ class ProductSave extends Component {
         })
     }
     handleFinish(values){
-        const { targetKeys, id, mainImage, images } = this.state
+        const { targetKeys, id, mainImage, images, detail } = this.state
         if (targetKeys.length > 0) {
             values.attrs = targetKeys.join(',')
         }
@@ -87,7 +91,9 @@ class ProductSave extends Component {
         if (mainImage && images){
             values.mainImage = mainImage
             values.images = images
-            this.props.handleSave(values, id)
+            values.detail = detail
+            values.id = id
+            this.props.handleSave(values)
         }
     }
     handleValidate(){
@@ -108,6 +114,11 @@ class ProductSave extends Component {
                 },
             })
         }
+    }
+    handleDetail(detail){
+        this.setState({
+            detail: detail
+        })
     }
     componentDidMount(){
         //获取分类
@@ -267,8 +278,14 @@ class ProductSave extends Component {
                             </Form.Item>
                             <Form.Item
                                 label="商品详情"
+                                labelCol={{span:6}}
+                                wrapperCol={{span:16}}
                             >
-                                <Input />
+                                <RichEditor 
+                                    data="hello"
+                                    uploadUrl={PRODUCT_DETAIL_IMAGES_UPLOAD}
+                                    getData={this.handleDetail}
+                                />
                             </Form.Item>                                                                                                                                                                                                                                                                    
                             <Form.Item {...tailLayout}>
                                 <Button type="primary" htmlType="submit">
@@ -287,9 +304,8 @@ const mapStateToProps = (state) => ({
     allAttrs: state.get('product').get('allAttrs'),       
 })
 const mapDispatchToProps = (dispatch) => ({
-    handleSave:(values,id)=>{
-        console.log(values)
-        //dispatch(actionCreator.getSaveAction(values,id))
+    handleSave:(values)=>{
+        dispatch(actionCreator.getSaveAction(values))
     },
     handleLevelCategories: () => {
         dispatch(actionCreator.getLevelCategoriesAction())
