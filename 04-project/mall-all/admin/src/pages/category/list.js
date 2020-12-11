@@ -127,20 +127,11 @@ class CategoryList extends Component {
         return (
             <div className="CategoryList">
                 <CustomLayout>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>首页</Breadcrumb.Item>
-                            <Breadcrumb.Item>分类</Breadcrumb.Item>
-                            <Breadcrumb.Item>分类列表</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <Link to="/category/save">
-                            <Button type='primary'>新增</Button>
-                        </Link>
-                    </div>    
+                    <Breadcrumb style={{ margin: '16px 0' }}>
+                        <Breadcrumb.Item>首页</Breadcrumb.Item>
+                        <Breadcrumb.Item>分类</Breadcrumb.Item>
+                        <Breadcrumb.Item>分类列表</Breadcrumb.Item>
+                    </Breadcrumb>  
                     <Content
                         className="site-layout-background"
                         style={{
@@ -148,7 +139,16 @@ class CategoryList extends Component {
                             margin: 0,
                             minHeight: 280,
                         }}
-                    >
+                    >                        
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'row-reverse',
+                            marginBottom: '20px'
+                        }}>
+                            <Link to="/category/save">
+                                <Button type='primary'>新增</Button>
+                            </Link>
+                        </div>                          
                         <Table
                             rowKey="_id"
                             dataSource={dataSource}

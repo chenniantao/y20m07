@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Breadcrumb, Table, InputNumber, Button,Switch,Divider } from 'antd';
+import { Layout, Breadcrumb, Table, InputNumber, Button,Switch,Divider,Input } from 'antd';
 import {Link} from 'react-router-dom'
 const { Content } = Layout;
+const { Search } = Input
 
 import CustomLayout from 'components/custom-layout'
 import { actionCreator } from './store';
@@ -19,6 +20,7 @@ class ProductList extends Component {
             pageSize, 
             handlePage, 
             isFetching,
+            keyword,
             handleUpdateIsShow,
             handleUpdateStatus,
             handleUpdateIsHot, 
@@ -29,7 +31,17 @@ class ProductList extends Component {
             {
                 title: '名称',
                 dataIndex: 'name',
-                ellipsis:true
+                ellipsis:true,
+                render:(name)=>{
+                    if(keyword){
+                        //搜索关键字高亮处理
+                        const reg = new RegExp('('+keyword+')','ig')
+                        const html = name.replace(reg,'<b style="color:red;">$1</b>')
+                        return <span dangerouslySetInnerHTML={{ __html: html }}></span>
+                    }else{
+                        return name
+                    }
+                }
             },
             {
                 title: '是否显示在首页',
@@ -105,20 +117,11 @@ class ProductList extends Component {
         return (
             <div className="ProductList">
                 <CustomLayout>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>首页</Breadcrumb.Item>
-                            <Breadcrumb.Item>商品</Breadcrumb.Item>
-                            <Breadcrumb.Item>商品列表</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <Link to="/product/save">
-                            <Button type='primary'>新增</Button>
-                        </Link>
-                    </div>    
+                    <Breadcrumb style={{ margin: '16px 0' }}>
+                        <Breadcrumb.Item>首页</Breadcrumb.Item>
+                        <Breadcrumb.Item>商品</Breadcrumb.Item>
+                        <Breadcrumb.Item>商品列表</Breadcrumb.Item>
+                    </Breadcrumb>   
                     <Content
                         className="site-layout-background"
                         style={{
@@ -127,6 +130,22 @@ class ProductList extends Component {
                             minHeight: 280,
                         }}
                     >
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            marginBottom:'20px'
+                        }}>
+                            <Search
+                                placeholder="请输入商品名称关键字"
+                                allowClear
+                                onSearch={(value) => { handlePage(1, value)}}
+                                style={{ width: 400}}
+                                enterButton
+                            />
+                            <Link to="/product/save">
+                                <Button type='primary'>新增</Button>
+                            </Link>
+                        </div>                         
                         <Table
                             rowKey="_id"
                             dataSource={dataSource}
@@ -141,7 +160,7 @@ class ProductList extends Component {
                             }
                             onChange={
                                 (pagination) => {
-                                    handlePage(pagination.current)
+                                    handlePage(pagination.current,keyword)
                                 }
                             }
                             loading={
@@ -164,10 +183,11 @@ const mapStateToProps = (state) => ({
     total: state.get('product').get('total'),
     pageSize: state.get('product').get('pageSize'),
     isFetching: state.get('product').get('isFetching'),
+    keyword: state.get('product').get('keyword'),    
 })
 const mapDispatchToProps = (dispatch) => ({
-    handlePage: (page) => {
-        dispatch(actionCreator.getPageAction(page))
+    handlePage: (page,keyword) => {
+        dispatch(actionCreator.getPageAction(page, keyword))
     },
     handleUpdateIsShow: (id, newIsShow) => {
         dispatch(actionCreator.getUpdateIsShowAction(id, newIsShow))

@@ -23,13 +23,17 @@ const setAllAttrs = (payload) => ({
     type: types.SET_ALL_ATTRS,
     payload: payload
 })
-export const getPageAction = (page) => {
+export const getPageAction = (page, keyword) => {
     return async function (dispatch) {
         dispatch(getPageRequestStart())
         try {
-            const result = await api.getProductList({
-                page: page
-            })
+            const options = {
+                page:page
+            }
+            if(keyword){
+                options.keyword = keyword
+            }
+            const result = await api.getProductList(options)
             if (result.code == 0) {
                 dispatch(setPage(result.data))
             } else {
