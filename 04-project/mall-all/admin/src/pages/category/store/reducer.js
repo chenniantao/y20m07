@@ -28,7 +28,10 @@ function reducer(state = defaultState, action) {
     } 
     if (action.type == types.SET_CATEGORIES) {
         return state.set('categories', action.payload)
-    }       
+    }
+    if (action.type == types.CLEAR_PAGE) {
+        return state.set('list', [])
+    }            
     return state
 }
 

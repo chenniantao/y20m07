@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Breadcrumb, Table, InputNumber,Button } from 'antd';
+import { Layout, Breadcrumb, Table, InputNumber, Button,Switch,Divider } from 'antd';
 import {Link} from 'react-router-dom'
 const { Content } = Layout;
 
@@ -18,7 +18,10 @@ class ProductList extends Component {
             total, 
             pageSize, 
             handlePage, 
-            isFetching, 
+            isFetching,
+            handleUpdateIsShow,
+            handleUpdateStatus,
+            handleUpdateIsHot, 
             handleUpdateOrder,
         } = this.props
         const dataSource = list
@@ -26,12 +29,60 @@ class ProductList extends Component {
             {
                 title: '名称',
                 dataIndex: 'name',
-                key: 'name',
+                ellipsis:true
             },
+            {
+                title: '是否显示在首页',
+                dataIndex: 'isShow',
+                width: '15%',
+                render: (isShow, record) => <Switch
+                    checkedChildren="显示"
+                    unCheckedChildren="隐藏"
+                    checked={isShow == '1' ? true : false}
+                    onChange={
+                        checked => {
+                            const newIsShow = checked ? '1' : '0'
+                            handleUpdateIsShow(record._id, newIsShow)
+                        }
+                    }
+                ></Switch>
+            },
+            {
+                title: '上架/下架',
+                dataIndex: 'status',
+                width: '10%',
+                render: (status, record) => <Switch
+                    checkedChildren="上架"
+                    unCheckedChildren="下架"
+                    checked={status == '1' ? true : false}
+                    onChange={
+                        checked => {
+                            const newStatus = checked ? '1' : '0'
+                            handleUpdateStatus(record._id, newStatus)
+                        }
+                    }
+                ></Switch>
+            },
+            {
+                title: '是否热门',
+                dataIndex: 'isHot',
+                width: '10%',
+                render: (isHot, record) => <Switch
+                    checkedChildren="是"
+                    unCheckedChildren="否"
+                    checked={isHot == '1' ? true : false}
+                    onChange={
+                        checked => {
+                            const newIsHot = checked ? '1' : '0'
+                            handleUpdateIsHot(record._id, newIsHot)
+                        }
+                    }
+                ></Switch>
+            },                                     
             {
                 title: '排序',
                 dataIndex: 'order',
-                key: 'order',
+                width: '10%',
                 render: (order, record) => <InputNumber
                     defaultValue={order}
                     onBlur={ev => {
@@ -43,8 +94,11 @@ class ProductList extends Component {
             },
             {
                 title: '操作',
+                width: '10%',
                 render:(text,record)=><span>
                     <Link to={'/product/save/'+record._id}>修改</Link>
+                    <Divider type="vertical" />
+                    <Link to={'/product/detail/' + record._id}>查看</Link>
                 </span>
             },
         ];
@@ -115,8 +169,17 @@ const mapDispatchToProps = (dispatch) => ({
     handlePage: (page) => {
         dispatch(actionCreator.getPageAction(page))
     },
+    handleUpdateIsShow: (id, newIsShow) => {
+        dispatch(actionCreator.getUpdateIsShowAction(id, newIsShow))
+    },
+    handleUpdateStatus: (id, newStatus) => {
+        dispatch(actionCreator.getUpdateStatusAction(id, newStatus))
+    },
+    handleUpdateIsHot: (id, newIsHot) => {
+        dispatch(actionCreator.getUpdateIsHotAction(id, newIsHot))
+    },              
     handleUpdateOrder: (id, newOrder) => {
         dispatch(actionCreator.getUpdateOrderAction(id, newOrder))
-    },          
+    },                  
 })
 export default connect(mapStateToProps, mapDispatchToProps)(ProductList)

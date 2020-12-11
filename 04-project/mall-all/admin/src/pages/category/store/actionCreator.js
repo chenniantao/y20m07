@@ -20,6 +20,9 @@ const setCategoies = (payload) => ({
     type: types.SET_CATEGORIES,
     payload: payload
 })
+const clearPage = (payload) => ({
+    type: types.CLEAR_PAGE
+})
 export const getPageAction = (page)=>{
     return async function (dispatch) {
         dispatch(getPageRequestStart())
@@ -181,6 +184,7 @@ export const getSaveAction = (values) => {
             if (result.code == 0) {
                 message.success(actionMessage,1)
                 dispatch(setCategoies(result.data))
+                dispatch(clearPage())
             }else{
                 message.error(result.message, 1)
             }

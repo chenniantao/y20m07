@@ -36,5 +36,9 @@ export const API_CONFIG = {
     
     addProduct:                         ['/products', 'post'],
     updateProduct:                      ['/products', 'put'],
-    getProductList:                     ['/products/list', 'get'],         
+    getProductList:                     ['/products/list', 'get'],
+    updateProductsIsShow:               ['/products/isShow', 'put'],
+    updateProductsStatus:               ['/products/status', 'put'],         
+    updateProductsIsHot:                ['/products/isHot', 'put'],
+    updateProductsOrder:                ['/products/order', 'put'],                              
 }
