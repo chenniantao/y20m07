@@ -155,7 +155,7 @@ export const getSaveAction = (values) => {
             let actionMessage = '添加商品成功'
             if (values.id) {
                 request = api.updateProduct
-                actionMessage = '修改属性成功'
+                actionMessage = '修改商品成功'
             }
             const result = await request(values)
             if (result.code == 0) {

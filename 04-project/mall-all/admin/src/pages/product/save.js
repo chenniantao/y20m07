@@ -120,11 +120,37 @@ class ProductSave extends Component {
             detail: detail
         })
     }
-    componentDidMount(){
+    async componentDidMount(){
         //获取分类
         this.props.handleLevelCategories() 
         //获取属性
         this.props.handleAllAttrs()
+        if(this.state.id){//编辑
+            const result = await api.getProductsDetail({ id: this.state.id })
+            if (result.code == 0) {
+                const data = result.data
+                //回填数据
+                this.formRef.current.setFieldsValue({
+                    category: data.category._id,
+                    name: data.name,
+                    description: data.description,
+                    price:data.price,
+                    stock:data.stock,
+                    payNums:data.payNums
+                })
+                this.setState({
+                    targetKeys:data.attrs.map(attr=>attr._id),
+                    mainImage:data.mainImage,
+                    images:data.images,
+                    detail: data.detail
+                })
+            }            
+        }else{//新增
+            this.setState({
+                mainImage: '',
+                images: ''
+            })
+        }
     }    
     render() {    
         const { 
@@ -135,17 +161,47 @@ class ProductSave extends Component {
             targetKeys,
             selectedKeys,
             mainImageValidate,
+            mainImage,
             imagesValidate,
+            images,
+            id,
+            detail,
         } = this.state
         const options = categories.map(cate => <Option key={cate._id} value={cate._id}>{cate.name}</Option>)
         const dataSource = allAttrs.map(attr => ({ key: attr._id, title: attr.name }))
+        let mainImageFileList = []
+        if (mainImage){
+            mainImageFileList.push({
+                uid: '-1',
+                name: 'image.png',
+                status: 'done',
+                url: mainImage,                
+            })
+        }else{
+            mainImageFileList = []
+        }
+        let imagesFileList = []
+        if (images){
+            imagesFileList = images.split(',').map((url,index)=>({
+                uid: index,
+                name: index+'.png',
+                status: 'done',
+                url: url,
+                response:{//为了修改的时候可以取到原本的值
+                    status: "done",
+                    url: url
+                }    
+            }))
+        }else{
+            imagesFileList = []
+        }
         return (
             <div className="ProductSave">
                 <CustomLayout>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                         <Breadcrumb.Item>首页</Breadcrumb.Item>
                         <Breadcrumb.Item>商品</Breadcrumb.Item>
-                        <Breadcrumb.Item>{this.state.id ? '编辑商品' : '添加商品'}</Breadcrumb.Item>                                                
+                        <Breadcrumb.Item>{id ? '编辑商品' : '添加商品'}</Breadcrumb.Item>                                                
                     </Breadcrumb>
                     <Content
                         className="site-layout-background"
@@ -261,7 +317,7 @@ class ProductSave extends Component {
                                     max={1}
                                     action={PRODUCT_IMAGE_UPLOAD}
                                     getImageUrlList={this.handleMainImage}
-                                    fileList={[]}
+                                    fileList={mainImageFileList}
                                 />
                             </Form.Item>
                             <Form.Item
@@ -273,7 +329,7 @@ class ProductSave extends Component {
                                     max={3}
                                     action={PRODUCT_IMAGE_UPLOAD}
                                     getImageUrlList={this.handleImages}
-                                    fileList={[]}
+                                    fileList={imagesFileList}
                                 />
                             </Form.Item>
                             <Form.Item
@@ -282,7 +338,7 @@ class ProductSave extends Component {
                                 wrapperCol={{span:16}}
                             >
                                 <RichEditor 
-                                    data="hello"
+                                    data={detail}
                                     uploadUrl={PRODUCT_DETAIL_IMAGES_UPLOAD}
                                     getData={this.handleDetail}
                                 />

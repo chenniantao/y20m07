@@ -41,4 +41,5 @@ export const API_CONFIG = {
     updateProductsStatus:               ['/products/status', 'put'],         
     updateProductsIsHot:                ['/products/isHot', 'put'],
     updateProductsOrder:                ['/products/order', 'put'],                              
+    getProductsDetail:                  ['/products/detail', 'get'],                              
 }
