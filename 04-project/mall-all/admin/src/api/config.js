@@ -6,6 +6,7 @@ export const VERSION = 'v1'
 export const CATEGORY_ICON_UPLOAD = SERVER + '/' + VERSION + '/categories/icons'
 export const PRODUCT_IMAGE_UPLOAD = SERVER + '/' + VERSION + '/products/images'
 export const PRODUCT_DETAIL_IMAGES_UPLOAD = SERVER + '/' + VERSION + '/products/detailImages'
+export const AD_IMAGE_UPLOAD = SERVER + '/' + VERSION + '/ads/image'
 
 export const API_CONFIG = {
     //方法名称:                          [请求地址,请求方法]
@@ -15,6 +16,7 @@ export const API_CONFIG = {
     logout:                             ['/users/logout', 'get'],
     getUserList:                        ['/users/list', 'get'],
     updateUsersIsActive:                ['/users/isActive', 'put'],
+    updateUsersPwd:                     ['/users/pwd', 'put'],    
     
     addCategory:                        ['/categories', 'post'],
     updateCategory:                     ['/categories', 'put'],                
@@ -41,5 +43,12 @@ export const API_CONFIG = {
     updateProductsStatus:               ['/products/status', 'put'],         
     updateProductsIsHot:                ['/products/isHot', 'put'],
     updateProductsOrder:                ['/products/order', 'put'],                              
-    getProductsDetail:                  ['/products/detail', 'get'],                              
+    getProductsDetail:                  ['/products/detail', 'get'], 
+    
+    addAd:                              ['/ads', 'post'],
+    updateAd:                           ['/ads', 'put'],
+    getAdList:                          ['/ads/list', 'get'],
+    updateAdsIsShow:                    ['/ads/isShow', 'put'],
+    updateAdsOrder:                     ['/ads/order', 'put'],
+    getAdsDetail:                       ['/ads/detail', 'get'],     
 }

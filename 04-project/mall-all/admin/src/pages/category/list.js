@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Breadcrumb, Table, Switch, Button, Input, InputNumber } from 'antd';
+import { Layout, Breadcrumb, Table, Switch, Button, Input, InputNumber, Image } from 'antd';
 import {Link} from 'react-router-dom'
 const { Content } = Layout;
 
@@ -30,7 +30,6 @@ class CategoryList extends Component {
             {
                 title: '分类名称',
                 dataIndex: 'name',
-                key: 'name',
                 width:'20%',
                 render:(name,record)=><Input
                     style={{width:'60%'}}
@@ -45,7 +44,6 @@ class CategoryList extends Component {
             {
                 title: '手机分类名称',
                 dataIndex: 'mobileName',
-                key: 'mobileName',
                 width: '20%',
                 render: (mobileName, record) => <Input
                     style={{ width: '60%' }}
@@ -60,14 +58,12 @@ class CategoryList extends Component {
             {
                 title: '手机图标',
                 dataIndex: 'icon',
-                key: 'icon',
                 width: '15%',
-                render: icon => <img style={{width:'50px',height:'50px',borderRadius:'50%'}} src={icon} />
+                render: icon => <Image width={50} src={icon} />
             },
             {
                 title: '是否显示',
                 dataIndex: 'isShow',
-                key: 'isShow',
                 width: '10%',
                 render: (isShow, record) => <Switch
                     checkedChildren="显示"
@@ -84,7 +80,6 @@ class CategoryList extends Component {
             {
                 title: '是否是楼层',
                 dataIndex: 'isFloor',
-                key: 'isFloor',
                 width: '10%',
                 render: (isFloor, record) =>{
                     return record.level == 1 ? 
@@ -105,7 +100,6 @@ class CategoryList extends Component {
             {
                 title: '排序',
                 dataIndex: 'order',
-                key: 'order',
                 width: '15%',
                 render: (order, record) => <InputNumber
                     style={{ width: '80%' }}

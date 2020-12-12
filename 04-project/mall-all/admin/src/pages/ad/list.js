@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Breadcrumb, Table, InputNumber,Button } from 'antd';
+import { Layout, Breadcrumb, Table, Switch, Button, Image, InputNumber } from 'antd';
 import {Link} from 'react-router-dom'
 const { Content } = Layout;
 
 import CustomLayout from 'components/custom-layout'
 import { actionCreator } from './store';
 
-class AttrList extends Component {
+class AdList extends Component {
     componentDidMount() {
         this.props.handlePage(1)
     }
@@ -19,26 +19,34 @@ class AttrList extends Component {
             pageSize, 
             handlePage, 
             isFetching, 
+            handleUpdateIsShow,
             handleUpdateOrder,
         } = this.props
         const dataSource = list
         const columns = [
             {
-                title: '名称',
+                title: '广告名称',
                 dataIndex: 'name',
+                width:'20%'
             },
             {
-                title: '属性键',
-                dataIndex: 'key',
+                title: '广告位置',
+                dataIndex: 'position',
+                width: '20%',
+                render: position => position == '1' ? '电脑端首页轮播图' : '移动端端首页轮播图'               
             },
             {
-                title: '属性值',
-                dataIndex: 'value',
-            },
+                title: '广告缩略图',
+                dataIndex: 'image',
+                width: '15%',
+                render: image => <Image width={50} src={image} />
+            },         
             {
                 title: '排序',
                 dataIndex: 'order',
+                width: '15%',
                 render: (order, record) => <InputNumber
+                    style={{ width: '80%' }}
                     defaultValue={order}
                     onBlur={ev => {
                         if (ev.target.value != order) {
@@ -48,20 +56,37 @@ class AttrList extends Component {
                 ></InputNumber>                   
             },
             {
+                title: '是否显示',
+                dataIndex: 'isShow',
+                key: 'isShow',
+                width: '10%',
+                render: (isShow, record) => <Switch
+                    checkedChildren="显示"
+                    unCheckedChildren="隐藏"
+                    checked={isShow == '1' ? true : false}
+                    onChange={
+                        checked => {
+                            const newIsShow = checked ? '1' : '0'
+                            handleUpdateIsShow(record._id, newIsShow)
+                        }
+                    }
+                ></Switch>
+            },            
+            {
                 title: '操作',
                 render:(text,record)=><span>
-                    <Link to={'/attr/save/'+record._id}>修改</Link>
+                    <Link to={'/ad/save/'+record._id}>修改</Link>
                 </span>
             },
         ];
         return (
-            <div className="AttrList">
+            <div className="AdList">
                 <CustomLayout>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                         <Breadcrumb.Item>首页</Breadcrumb.Item>
-                        <Breadcrumb.Item>属性</Breadcrumb.Item>
-                        <Breadcrumb.Item>属性列表</Breadcrumb.Item>
-                    </Breadcrumb> 
+                        <Breadcrumb.Item>分类</Breadcrumb.Item>
+                        <Breadcrumb.Item>广告列表</Breadcrumb.Item>
+                    </Breadcrumb>  
                     <Content
                         className="site-layout-background"
                         style={{
@@ -69,16 +94,16 @@ class AttrList extends Component {
                             margin: 0,
                             minHeight: 280,
                         }}
-                    >
+                    >                        
                         <div style={{
                             display: 'flex',
                             flexDirection: 'row-reverse',
                             marginBottom: '20px'
                         }}>
-                            <Link to="/attr/save">
+                            <Link to="/ad/save">
                                 <Button type='primary'>新增</Button>
                             </Link>
-                        </div>      
+                        </div>                          
                         <Table
                             rowKey="_id"
                             dataSource={dataSource}
@@ -111,18 +136,21 @@ class AttrList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    list: state.get('attr').get('list'),
-    current: state.get('attr').get('current'),
-    total: state.get('attr').get('total'),
-    pageSize: state.get('attr').get('pageSize'),
-    isFetching: state.get('attr').get('isFetching'),
+    list: state.get('ad').get('list'),
+    current: state.get('ad').get('current'),
+    total: state.get('ad').get('total'),
+    pageSize: state.get('ad').get('pageSize'),
+    isFetching: state.get('ad').get('isFetching'),
 })
 const mapDispatchToProps = (dispatch) => ({
     handlePage: (page) => {
         dispatch(actionCreator.getPageAction(page))
     },
+    handleUpdateIsShow: (id, newIsShow) => {
+        dispatch(actionCreator.getUpdateIsShowAction(id, newIsShow))
+    },
     handleUpdateOrder: (id, newOrder) => {
         dispatch(actionCreator.getUpdateOrderAction(id, newOrder))
     },          
 })
-export default connect(mapStateToProps, mapDispatchToProps)(AttrList)
+export default connect(mapStateToProps, mapDispatchToProps)(AdList)

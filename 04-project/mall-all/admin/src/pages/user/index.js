@@ -18,18 +18,15 @@ class User extends Component {
             {
                 title: '用户名',
                 dataIndex: 'username',
-                key: 'username',
             },
             {
                 title: '是否管理员',
                 dataIndex: 'isAdmin',
-                key: 'isAdmin',
                 render: isAdmin => isAdmin ? '是' : '否'
             },
             {
                 title: '是否有效用户',
                 dataIndex: 'isActive',
-                key: 'isActive',
                 render: (isActive,record) => <Switch 
                     checkedChildren="是" 
                     unCheckedChildren="否"
@@ -45,22 +42,18 @@ class User extends Component {
             {
                 title: 'email',
                 dataIndex: 'email',
-                key: 'email',
             },
             {
                 title: '手机',
                 dataIndex: 'phone',
-                key: 'phone',
             },
             {
                 title: '微信openid',
                 dataIndex: 'wxopenid',
-                key: 'wxopenid',
             },
             {
                 title: '注册时间',
                 dataIndex: 'createdAt',
-                key: 'createdAt',
                 render: createdAt => formatDate(createdAt)
             },                          
         ];
