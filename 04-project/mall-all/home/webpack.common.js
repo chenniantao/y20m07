@@ -1,12 +1,24 @@
 // webpack.common.js
 const path = require('path');
+const webpack = require('webpack')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+
+//生成htmlWebpackPlugin的配置
+const getHtmlConfig = (name,title)=>({
+    template: './src/view/'+name+'.html',//模板文件
+    filename: name+'.html',//输出的文件名
+    hash: true,//给生成的文件添加一个唯一的hash
+    title: title,
+    chunks: ['common', name]//需要包含的入口中的chunk
+})
 module.exports = {
     entry: { //对象写法指定需要打包的入口文件
         //chunk名称:入口文件路径
-        'index':'./src/pages/index/index.js'
+        'common'            :'./src/pages/common/index.js',
+        'index'             :'./src/pages/index/index.js',
+        'list'              :'./src/pages/list/index.js',
     },
     output: {
         filename: 'js/[name]-[chunkhash].bundle.js',//指定打包后的文件名称,不用带路径
@@ -75,7 +87,10 @@ module.exports = {
                     {
                         loader: 'style-resources-loader',
                         options: {
-                            patterns: path.resolve(__dirname, 'src/pages/common/them.less'),
+                            patterns: [
+                                path.resolve(__dirname, 'src/pages/common/them.less'),
+                                path.resolve(__dirname, 'src/pages/common/iconfont.css'),
+                            ] 
                         }
                     }
                 ],
@@ -83,14 +98,14 @@ module.exports = {
         ]
     },
     plugins:[
-        new htmlWebpackPlugin({
-            template: './src/view/index.html',//模板文件
-            filename: 'index.html',//输出的文件名
-            hash: true,//给生成的文件添加一个唯一的hash
-            chunks: ['index']//需要包含的入口中的chunk
-        }),
+        new htmlWebpackPlugin(getHtmlConfig('index','首页')),
+        new htmlWebpackPlugin(getHtmlConfig('list', '列表页')),      
         new MiniCssExtractPlugin({
             filename:'css/[name].[fullhash].css'//使用模版指定输出的css文件的位置和文件名称,模版和出口的模版一致
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
         }),
         new CleanWebpackPlugin()
     ]
