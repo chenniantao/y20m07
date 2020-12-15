@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%= require('html-loader!./common/meta.html') %>
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+</head>
+
+<body>
+    <%= require('html-loader!./common/logo.html') %>
+
+    <div class="register-box form page-wrap">
+        <div class="container">
+            <div class="form-box">
+                <h2 class="title">验证码动态登陆</h2>
+                <div class="error-item">
+                    <i class="iconfont font-minus-circle error-icon"></i>
+                    <p class="error-msg">error</p>
+                </div>
+                <div class="form-item">
+                    <label for="" class="form-lable">
+                        <i class="iconfont icon-phone"></i>
+                    </label>
+                    <input type="text" class="form-content" name="phone" placeholder="请输入手机号">
+                </div>
+                <div class="form-item verify-code">
+                    <input type="text" class="form-content" name="verify-code" placeholder="请输手机验证码">
+                    <a href="javascript:;" class="btn" id="btn-verify-code">获取验证码</a>
+                    <div class="captcha-box">
+                        <div class="input-box">
+                            <input type="text" name="captcha-code" placeholder="请输图形验证码">
+                            <div class="captcha-img">
+    
+                            </div>
+                        </div>
+                        <a href="javascript:;" class="btn" id="btn-captcha-code">发送</a>
+                    </div>
+                </div>
+                <div class="btn-item">
+                    <a href="javascript:;" class="btn btn-submit" id="btn-submit">提交</a>
+                </div>
+                <div class="link-item">
+                    <a href="./user-login.html" class="link">已有账号去登录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%= require('html-loader!./common/footer.html') %>
+
+</body>
+
+</html>
