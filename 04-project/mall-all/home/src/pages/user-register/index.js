@@ -3,12 +3,15 @@ require('pages/common/footer')
 require('./index.less')
 
 var _util = require('util')
+var api = require('api')
+
+console.log(api)
 
 var formErr = {
-    showErr:function(msg){
+    show:function(msg){
         $('.error-item').show().find('.error-msg').html(msg)
     },
-    hideErr:function(){
+    hide:function(){
         $('.error-item').hide().find('.error-msg').html('')
     }
 }
@@ -37,10 +40,19 @@ var page = {
         var result = this.validate(formData)
         if(result.status){//验证成功
             //3.提交到后台
-            formErr.hideErr()
+            formErr.hide()
+            api.register({
+                data: formData,
+                success:function(result){
+                    console.log('ok...')
+                },
+                error:function(msg){
+                    formErr.show(msg) 
+                }
+            })
         }
         else{//验证失败
-            formErr.showErr(result.msg)
+            formErr.show(result.msg)
         }
     },
     validate: function (formData){

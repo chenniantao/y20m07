@@ -26,5 +26,8 @@ module.exports = {
             return /^[a-zA-Z0-9]{4}$/.test(value)
         }
 
+    },
+    goLogin:function(){
+        window.location.href = '/user-login.html'
     }
 }
