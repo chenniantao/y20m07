@@ -19,6 +19,7 @@ module.exports = {
         'common'            :'./src/pages/common/index.js',
         'index'             :'./src/pages/index/index.js',
         'list'              :'./src/pages/list/index.js',
+        'user-login'        :'./src/pages/user-login/index.js',
     },
     output: {
         filename: 'js/[name]-[chunkhash].bundle.js',//指定打包后的文件名称,不用带路径
@@ -99,7 +100,8 @@ module.exports = {
     },
     plugins:[
         new htmlWebpackPlugin(getHtmlConfig('index','首页')),
-        new htmlWebpackPlugin(getHtmlConfig('list', '列表页')),      
+        new htmlWebpackPlugin(getHtmlConfig('list', '列表页')), 
+        new htmlWebpackPlugin(getHtmlConfig('user-login', '用户登录')),      
         new MiniCssExtractPlugin({
             filename:'css/[name].[fullhash].css'//使用模版指定输出的css文件的位置和文件名称,模版和出口的模版一致
         }),
