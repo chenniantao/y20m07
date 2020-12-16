@@ -26,6 +26,25 @@ var page = {
         $('#btn-submit').on('click',function(){
             _this.submit()
         })
+        //回车提交表单
+        $('input').on('keydown',function(ev){
+            if(ev.keyCode == 13){
+                _this.submit()
+            }
+        })
+        //获取验证码
+        $('#btn-verify-code').on('click',function(){
+            $('.captcha-box').show()
+            _this.getCaptcha()
+        })
+        //刷新验证码
+        $('.captcha-img').on('click',function(){
+            _this.getCaptcha()
+        })
+        //发送验证码请求
+        $('#btn-captcha-code').on('click',function(){
+            _this.getVerifyCodeRequest()
+        })
     },
     //注册的提交
     submit:function(){
@@ -91,6 +110,52 @@ var page = {
         result.status = true
         return result;
 
+    },
+    //获取图形验证码
+    getCaptcha:function(){
+        api.getCaptcha({
+            success:function(result){
+                $('.captcha-img').html(result)
+            }
+        })
+    },
+    //获取手机验证码请求
+    getVerifyCodeRequest:function(){
+        //验证
+        var phone = $.trim($('input[name="phone"]').val())
+        var captchaCode = $.trim($('input[name="captcha-code"]').val())
+        if (!_util.validate(phone, 'require')) {
+            formErr.show('手机号不能为空')
+            return
+        }
+        if (!_util.validate(phone, 'phone')) {
+            formErr.show('手机格式不正确')
+            return 
+        }
+        if (!_util.validate(captchaCode, 'require')) {
+            formErr.show('图形验证码不能为空')
+            return
+        }
+        if (!_util.validate(captchaCode, 'captchaCode')) {
+            formErr.show('图形验证码格式不正确')
+            return
+        }
+        formErr.hide()                 
+        //发送请求
+        api.getRegisterVerifyCode({
+            data:{
+                phone:phone,
+                captchaCode: captchaCode
+            },
+            success:function(){
+                _util.showSuccessMsg('手机验证码发送成功')
+                $('input[name="captcha-code"]').val('')
+                $('.captcha-box').hide()
+            },
+            error:function(msg){
+                formErr.show(msg)
+            }
+        })
     }
 }
 

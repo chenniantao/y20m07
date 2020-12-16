@@ -29,5 +29,8 @@ module.exports = {
     },
     goLogin:function(){
         window.location.href = '/user-login.html'
+    },
+    showSuccessMsg:function(msg){
+        alert(msg)
     }
 }

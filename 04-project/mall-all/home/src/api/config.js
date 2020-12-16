@@ -9,4 +9,5 @@ export const API_CONFIG = {
     getCaptcha:                         ['/users/captcha','get'],
     logout:                             ['/users/logout', 'get'],
     register:                           ['/users', 'post'], 
+    getRegisterVerifyCode:              ['/users/registerVerifyCode', 'get'], 
 }
