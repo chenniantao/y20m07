@@ -181,7 +181,7 @@ router.post("/",async (req,res)=>{
 			req.session.userInfo = {
 				_id:newUser._id,
 				username:newUser.username,
-				isAdmin:isAdmin
+				isAdmin:newUser.isAdmin
 			}
 			res.json({
 				code:0,

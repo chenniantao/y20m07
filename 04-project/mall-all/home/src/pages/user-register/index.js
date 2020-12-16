@@ -69,7 +69,7 @@ var page = {
             api.register({
                 data: formData,
                 success:function(result){
-                    console.log('ok...')
+                    _util.goResult('register')
                 },
                 error:function(msg){
                     formErr.show(msg) 
@@ -169,10 +169,10 @@ var page = {
     //处理倒计时
     handleTimer:function(){
         var _this = this
-        var $btn = $('#btn-verify-code')
-        var totalSecond = 60 //总共倒计时时间
         var getRegisterVerifyCodeTime = window.localStorage.getItem('getRegisterVerifyCodeTime')
         if (getRegisterVerifyCodeTime){
+            var $btn = $('#btn-verify-code')
+            var totalSecond = 60 //总共倒计时时间
             var passedSecond = parseInt((Date.now() - getRegisterVerifyCodeTime) / 1000)
             var restSecond = totalSecond - passedSecond
             if (restSecond > 0) {
@@ -184,10 +184,15 @@ var page = {
                     if (restSecond <= 0) {
                         clearInterval(_this.timer)
                         $btn.removeClass('disable-btn').html('获取验证码')
+                        window.localStorage.removeItem('getRegisterVerifyCodeTime')
                     } else {
                         $btn.html(restSecond + 's后重试')
                     } 
                 }, 1000)
+            }else{
+                clearInterval(_this.timer)
+                $btn.removeClass('disable-btn').html('获取验证码') 
+                window.localStorage.removeItem('getRegisterVerifyCodeTime')
             }
         }
     }
