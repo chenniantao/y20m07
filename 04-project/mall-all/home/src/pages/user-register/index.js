@@ -19,6 +19,7 @@ var formErr = {
 var page = {
     init:function(){
         this.bindEvent()
+        this.handleTimer()
     },
     bindEvent:function(){
         var _this = this
@@ -34,6 +35,11 @@ var page = {
         })
         //获取验证码
         $('#btn-verify-code').on('click',function(){
+            
+            if ($(this).hasClass('disable-btn')){
+                return
+            }
+
             $('.captcha-box').show()
             _this.getCaptcha()
         })
@@ -121,6 +127,7 @@ var page = {
     },
     //获取手机验证码请求
     getVerifyCodeRequest:function(){
+        var _this = this
         //验证
         var phone = $.trim($('input[name="phone"]').val())
         var captchaCode = $.trim($('input[name="captcha-code"]').val())
@@ -151,11 +158,38 @@ var page = {
                 _util.showSuccessMsg('手机验证码发送成功')
                 $('input[name="captcha-code"]').val('')
                 $('.captcha-box').hide()
+                window.localStorage.setItem('getRegisterVerifyCodeTime',Date.now())
+                _this.handleTimer()
             },
             error:function(msg){
                 formErr.show(msg)
             }
         })
+    },
+    //处理倒计时
+    handleTimer:function(){
+        var _this = this
+        var $btn = $('#btn-verify-code')
+        var totalSecond = 60 //总共倒计时时间
+        var getRegisterVerifyCodeTime = window.localStorage.getItem('getRegisterVerifyCodeTime')
+        if (getRegisterVerifyCodeTime){
+            var passedSecond = parseInt((Date.now() - getRegisterVerifyCodeTime) / 1000)
+            var restSecond = totalSecond - passedSecond
+            if (restSecond > 0) {
+                $btn.addClass('disable-btn')
+                $btn.html(restSecond + 's后重试')
+                _this.timer = setInterval(function () {
+                    passedSecond = parseInt((Date.now() - getRegisterVerifyCodeTime) / 1000)
+                    restSecond = totalSecond - passedSecond
+                    if (restSecond <= 0) {
+                        clearInterval(_this.timer)
+                        $btn.removeClass('disable-btn').html('获取验证码')
+                    } else {
+                        $btn.html(restSecond + 's后重试')
+                    } 
+                }, 1000)
+            }
+        }
     }
 }
 
