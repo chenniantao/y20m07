@@ -24,7 +24,8 @@ module.exports = {
         'user-register'             :'./src/pages/user-register/index.js',
         'result'                    :'./src/pages/result/index.js',
         'detail'                    : './src/pages/detail/index.js',
-        'cart'                      : './src/pages/cart/index.js',          
+        'cart'                      : './src/pages/cart/index.js', 
+        'order-confirm'             : './src/pages/order-confirm/index.js',          
     },
     output: {
         filename: 'js/[name]-[chunkhash].bundle.js',//指定打包后的文件名称,不用带路径
@@ -118,6 +119,7 @@ module.exports = {
         new htmlWebpackPlugin(getHtmlConfig('result', '结果提示')), 
         new htmlWebpackPlugin(getHtmlConfig('detail', '详情页面')),
         new htmlWebpackPlugin(getHtmlConfig('cart', '购物车页面')),         
+        new htmlWebpackPlugin(getHtmlConfig('order-confirm', '订单确认')),         
         new MiniCssExtractPlugin({
             filename:'css/[name].[fullhash].css'//使用模版指定输出的css文件的位置和文件名称,模版和出口的模版一致
         }),
