@@ -98,7 +98,13 @@ module.exports = {
                         }
                     }
                 ],
-            }           
+            },
+            {
+                test: /\.tpl$/,
+                use: {
+                    loader: 'html-loader',
+                }
+            },              
         ]
     },
     plugins:[
