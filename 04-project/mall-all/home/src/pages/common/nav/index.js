@@ -1,5 +1,7 @@
 require('./index.less')
 var api = require('api')
+var _util = require('util')
+var tpl = require('./index.tpl')
 var page = {
     init:function(){
         this.$cartContent = $('.top .cart-content');

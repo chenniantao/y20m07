@@ -1,0 +1,58 @@
+/*
+* @Author: TomChen
+* @Date:   2019-08-25 16:14:05
+* @Last Modified by:   TomChen
+* @Last Modified time: 2019-08-25 16:14:28
+*/
+.modal-wrap{
+    position: fixed;
+    top:0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.4);
+}
+.modal-wrap .modal-container{
+    width: 300px;
+    height: 150px;
+    background-color: #fff;
+    margin: 100px auto;
+    padding: 32px 32px 24px;  
+    border-radius: @border-radius-base;
+}
+.modal-wrap .msg-box .icon{
+    font-size: 24px;
+}
+.modal-wrap .msg-box .error-icon{
+    color: @error-color;
+}
+.modal-wrap .msg-box .success-icon{
+    color: @success-color;
+}
+.modal-wrap .msg-box .confirm-icon{
+    color: @success-color;
+}
+
+.modal-wrap .msg-box .msg{
+    font-size: 16px;
+    margin-left: 10px;
+    color: @text-color;
+    vertical-align: text-bottom;
+}
+.modal-wrap .modal-body{
+    box-sizing: border-box;
+    padding-top: 40px;
+    position: relative;
+    height: 100%;
+}
+.modal-wrap .modal-body .btns{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.modal-wrap .modal-body .btns .btn{
+    margin-left: 10px;
+}
+.modal-wrap .modal-body .btns .btn-cancel{
+    background-color: @disabled-color;
+}

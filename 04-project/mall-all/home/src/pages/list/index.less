@@ -1,0 +1,83 @@
+/*
+* @Author: TomChen
+* @Date:   2019-08-21 17:54:02
+* @Last Modified by:   Tom
+* @Last Modified time: 2019-10-18 15:53:24
+*/
+.list.page-wrap{
+    padding-bottom: 20px;
+}
+.list .category-wrap .category-title {
+    color: #fff;
+    font-size: 16px;
+    background: #333333;
+    text-align: center;
+    line-height: 40px;
+}
+.list .category-wrap .category-title .iconfont{
+    margin-right: 10px;
+}
+.list .category-wrap .category-list{
+    box-sizing: border-box;
+    padding: 10px;
+    min-height: 633px;
+    border: 1px solid @border-color-base;
+    font-size: 16px;
+    font-weight: 200;
+}
+.list .category-wrap .category-list a{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.list .parent>ul{
+    margin-left: 15px;
+}
+.list .iconfont{
+    color: @text-color;
+    margin-right: 5px;
+    cursor:pointer;
+    font-weight: 200;
+}
+.list a.active{
+    color:@primary-color;
+}
+.sort{
+    margin-bottom: 20px;
+}
+.sort-item {
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    float: left;
+    color:@text-color-secondary;
+    border: 1px solid @border-color-base;
+    margin-right: -1px;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+}
+.sort-item.active{
+    background-color: @primary-color;
+    border: 1px solid @primary-color;
+    color: #fff;
+}
+.sort-item .icon-sort-asc{
+    position: absolute;
+    top:8px;
+}
+.sort-item.asc .icon-sortdesc{
+    color: #888;
+}
+.sort-item.desc .icon-sort-asc{
+    color: #888;
+}
+.product-list-box{
+    min-height: 640px;
+}
+.col-1,.col-4{
+    float: left;
+}
+.list.page-wrap .product-item:nth-child(4n+0){
+    margin-right: 0;
+}

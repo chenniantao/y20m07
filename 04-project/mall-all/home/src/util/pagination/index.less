@@ -1,0 +1,38 @@
+/*
+* @Author: TomChen
+* @Date:   2019-08-25 16:14:05
+* @Last Modified by:   TomChen
+* @Last Modified time: 2019-08-25 16:14:28
+*/
+.pagination{
+    text-align: center;
+}
+.page-item{
+    display: inline-block;
+    width: 45px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid @border-color-base;
+    cursor: pointer;
+    user-select: none;
+    color: @text-color-secondary;
+    margin-left: -4px;
+}
+.disabled{
+    border-color: @disabled-color;
+    color: @disabled-color;
+    cursor: auto;
+}
+.pagination .active{
+    border-color: @primary-color;
+    background-color: @primary-color;
+    color: #fff;
+    cursor: auto;
+}
+.page-summ{
+    color: @text-color-secondary;
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 10px;
+}
