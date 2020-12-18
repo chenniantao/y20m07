@@ -42,6 +42,7 @@ a:hover{
     text-align: center;
     padding:20px 10px;
     transition: all 0.3s;
+    margin-bottom: 10px;
 }
 .product-list .product-item:hover{
     box-shadow: 1px 1px 1px rgba(0,0,0,.1);
@@ -63,9 +64,23 @@ a:hover{
     font-size: 14px;
     color: #f21;
 }
+.product-list .product-item .product-price:before{
+    content: "¥ "
+}
 .product-list .product-item .paynum{
     float: right;
-    color: #aaa;
+    color: @text-color-secondary;
+}
+.product-list .product-item .product-img{
+    width: 180px;
+    height: 180px;
+    margin-top: 20px;
+}
+.product-list .product-item:last-child{
+    margin-right: 0;
+}
+.product-list .product-item:nth-child(5n+0){
+    margin-right: 0;
 }
 .loader{
     position: relative;

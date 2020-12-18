@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "hogan.js": "^3.0.2",
-    "jquery": "^1.12.4"
+    "jquery": "^1.12.4",
+    "swiper": "^4.5.0"
   }
 }
