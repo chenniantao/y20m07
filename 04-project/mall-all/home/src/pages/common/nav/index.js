@@ -8,6 +8,7 @@ var page = {
         this.loadUsername()
         this.bindEvent()
         this.loadCartsCount()
+        return this
     },
     loadUsername:function(){
         api.getUsername({
@@ -67,6 +68,4 @@ var page = {
     },    
 }
 
-$(function(){
-    page.init()
-})
+module.exports = page.init()
