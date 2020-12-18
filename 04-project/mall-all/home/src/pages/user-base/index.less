@@ -1,0 +1,65 @@
+/*
+* @Author: TomChen
+* @Date:   2019-08-21 17:54:02
+* @Last Modified by:   Tom
+* @Last Modified time: 2019-10-18 16:09:25
+*/
+.user-base .form-box{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    .form-item{
+        width: 350px;
+        margin-top: 30px;
+        position: relative;
+        .btn{
+            position: absolute;
+            left: 350px;
+            bottom:0;
+            height: 32px;
+            bottom: -1px;
+        }
+    }
+}
+.user-base{
+    .btn.btn-upload{
+        width: 100px;
+    }
+    .form-box .iconfont{
+        font-size: 16px;
+    }   
+}
+.user-base .header{
+    position: relative;
+    display: flex;
+    img{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+    }
+    .upload-file{
+        width: 100px;
+        height: 30px;
+        align-self: center;
+        margin-left: 10px;  
+        opacity: 0;
+        position: relative;
+        z-index: 999;
+        cursor: pointer;
+    }
+    .btn-upload{
+        position: absolute;
+        left:110px;
+        top:34px;
+        z-index: 0;
+    }
+}
+.user-base .content{
+    .item{
+        line-height: 60px;
+        border-bottom: 1px dashed @border-color-base;
+        margin-top: 10px;
+        font-weight: 300;
+        font-size: 16px;        
+    }
+}

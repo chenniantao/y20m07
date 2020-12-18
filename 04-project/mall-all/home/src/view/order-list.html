@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <%= require('html-loader!./common/meta.html') %>
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+</head>
+<body>
+    <%= require('html-loader!./common/nav.html') %>
+    <%= require('html-loader!./common/search.html') %>
+    <div class="order-list page-wrap">
+        <div class="container">
+            <div class="crumb">
+                <a href="/" class="link">首页</a>
+                <i class="fa fa-angle-right"></i>
+                <span class="link-text">
+                    <%= htmlWebpackPlugin.options.title %>
+                </span>
+            </div>
+        </div>      
+        <div class="container clearfix">
+            <!--
+            <ul class="side">
+                <li class="side-item active">
+                    <a class="link" href="./user-center.html">用户中心</a>
+                </li>
+                <li class="side-item">
+                    <a class="link" href="./order-list.html">我的订单</a>
+                </li>
+                <li class="side-item">
+                    <a class="link" href="./user-update-password.html">修改密码</a>
+                </li>                               
+            </ul>
+            -->
+            <%= require('html-loader!./common/side.html') %>
+            <div class="side-content">
+                <div class="order-box">
+                    <div class="panel">
+                        <h2 class="panel-header">
+                            订单列表
+                        </h2>
+                        <div class="action-bar">
+                            <ul class="clearfix">
+                                <li class="btn-order" data-status="">全部</li>
+                                <li class="btn-order" data-status="10">待付款</li>
+                                <li class="btn-order" data-status="20">取消</li>
+                                <li class="btn-order" data-status="30">待发货</li>
+                                <li class="btn-order" data-status="40">已发货</li>
+                                <li class="btn-order" data-status="50">已完成</li>
+                            </ul>
+                        </div>
+                        <div class="pandel-body"></div>
+                    </div>
+                </div>
+                <div class="pagination-box">    
+                </div>              
+            </div>
+
+        </div>
+    </div>     
+    <%= require('html-loader!./common/footer.html') %>
+</body>
+</html>

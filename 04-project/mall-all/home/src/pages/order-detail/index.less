@@ -1,0 +1,151 @@
+/*
+* @Author: TomChen
+* @Date:   2019-08-21 17:54:02
+* @Last Modified by:   Tom
+* @Last Modified time: 2019-10-18 16:06:35
+*/
+
+
+.product-title li,
+.product-item li,
+.product-footer li{
+    float: left;
+}
+.product-title,
+.product-item,
+.product-footer{
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.product-title {
+    height: 40px;
+    line-height: 40px;
+    background-color: #ddd;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.product-item {
+    height: 80px;
+    line-height: 80px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+}
+
+.product-item .product-info img{
+    width: 60px;
+    height: 60px;
+    vertical-align: middle;
+}
+
+.product-item  .product-totalPrice{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.product-footer{
+    height: 60px;
+    line-height: 60px;
+    background-color: #ddd;
+    color: #666;    
+}
+
+.product-footer .product-submit{
+    float: right;
+}
+.product-footer .product-submit .btn-submit{
+    height: 60px;
+    line-height: 60px;
+    width: 100px;   
+}
+.product-footer .product-submit  .total-price{
+    display: inline-block;
+    line-height: 60px;
+    font-size: 20px;
+    font-weight: bold;
+    color: @price-color;
+    margin-right: 20px;
+}
+.product-footer .product-submit .total-price-text{
+    position: relative;
+    top:-2px;
+}
+.panel{
+    padding: 10px;
+    background-color: #fff;
+}
+.panel-header{
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    color: #666;
+    border-bottom: 1px solid #fafafa;
+}
+.pandel-body{
+    padding: 10px;
+    overflow: hidden;
+}
+
+/*
+订单样式
+*/
+
+.order-detail .product-info{
+    width: 70%;
+}
+.order-detail .product-price-txt,
+.order-detail .product-price-title
+{
+    width: 10%;
+}
+.order-detail .product-price-txt:before{
+    content: "$ "
+}
+.order-detail .product-count{
+    width: 10%;
+}
+.order-detail .product-totalPrice-title,
+.order-detail .product-totalPrice-txt{
+    width: 10%;
+}
+.order-detail .product-totalPrice-txt:before{
+    content: "$ "
+}
+
+.order-detail .product-item{
+    margin-bottom: 0px;
+    margin-top: -1px;
+}
+
+.order-detail .order-info li{
+    height: 30px;
+    line-height: 30px;
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.order-detail .lable{
+    color: @text-color-secondary;
+}
+.deliver-item{
+    margin-top: 5px;
+    line-height: 24px;
+    border-left: 1px dashed #ccc;
+    padding-left: 10px;
+}
+.expressName{
+
+}
+.expressName-title{
+    color: @text-color-secondary;
+}
+.expressName-txt{
+    color: @heading-color;
+    margin-right: 10px;
+    font-weight: bold;
+}
+.expressErrMsg{
+    margin-top: 10px;
+    color: @warning-color;
+}

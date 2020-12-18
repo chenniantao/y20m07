@@ -415,7 +415,7 @@ router.get("/info",(req,res)=>{
 				createdAt: user.createdAt,
 				phone: user.phone,
 				username: user.username,
-				avatar: user.avatar,
+				avatar: user.avatar || UPLOAD_HOST + '/avatar/default.jpg',
 				_id: user._id,
 			}
 			res.json({

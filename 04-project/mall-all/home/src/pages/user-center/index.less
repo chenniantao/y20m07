@@ -1,0 +1,38 @@
+/*
+* @Author: TomChen
+* @Date:   2019-08-21 17:54:02
+* @Last Modified by:   Tom
+* @Last Modified time: 2019-10-18 16:09:25
+*/
+.user-center .header{
+    display: flex;
+    img{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+    }
+    span{
+        font-weight: 300;
+        font-size: 18px;
+        align-self: center;
+        margin-left: 10px;
+    }     
+}
+.user-center .content{
+    .item{
+        line-height: 60px;
+        border-bottom: 1px dashed @border-color-base;
+        margin-top: 10px;
+        font-weight: 300;
+        font-size: 16px;        
+        .label{
+            color: @text-color;
+            i{
+                margin-right: 5px;
+            }
+        }
+        .text{
+            color: @text-color-secondary;            
+        }
+    }
+}
