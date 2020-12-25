@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <!--过滤器的使用1: 在{{}}中,如{{price | formatPrice}}-->
+        <!--过滤器的使用2: 在动态绑定属性中,如:title="price  | formatPrice"-->
+        <p :title="price  | formatPrice">{{price | formatPrice}}</p>
+    </div>
+    <div id="app2">
+        <p :title="price  | formatPrice">{{price | formatPrice}}</p>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    //注册一个全局过滤器,该过滤器可以在所有实例中使用
+    Vue.filter('formatPrice', price=>{
+        return '¥'+price.toFixed(2)
+    })
+    const vm1 = new Vue({
+        el: '#app1',
+        data:{
+            price:88
+        }
+    })
+    const vm2 = new Vue({
+        el: '#app2',
+        data:{
+            price:99
+        }
+    })           
+</script>
+
+</html>

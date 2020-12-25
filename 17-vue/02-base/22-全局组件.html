@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <!--使用组件-->
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+    <div id="app2">
+        <!--使用组件-->
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    //注意1:定义要放在vue实例生成之前
+    Vue.component('button-counter', {
+        //注意2:data必须是一个函数
+        data() {
+            return {
+                count: 0
+            }
+        },    
+        methods: {
+            calculate() {
+                this.count = this.count + 1
+            }
+        },
+        template: '<button @click="calculate">我被点击了{{count}}次</button>'
+    })
+    //注意3:可以在任何新创建的 Vue 根实例 (new Vue) 的模板中使用     
+    const vm1 = new Vue({
+        el: '#app1',
+    })
+    const vm2 = new Vue({
+        el: '#app2',
+    })       
+</script>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p ref="elem">{{message}}</p>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    const vm = new Vue({
+        el:'#app',
+        data:{
+            message:'hello vue'
+        }
+    })
+    console.log(vm.$data.message)//hello vue
+    console.log(vm.$el == document.getElementById('app'))//ture
+    console.log(vm.$refs.elem)//<p ref="elem">hello vue</p>
+    //侦听器
+    vm.$watch('message',function(){
+        console.log('message has been changed')
+    })
+    //完全销毁一个实例
+    vm.$destroy()
+</script>
+</html>

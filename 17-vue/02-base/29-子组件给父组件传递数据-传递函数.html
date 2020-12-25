@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <father-component></father-component>
+    </div>
+    <!--子组件模版-->
+    <template id="son-component">
+        <div>
+            <p>this is son component,get score is:{{score}}</p>
+            <input type="number" v-model="extra_score">
+        </div>
+    </template>
+    
+    <!--父组件模版-->
+    <template id="father-component">
+        <div>
+            <p>this is father component,score is:{{score}}</p>
+            <!--在父组件中通过动态绑定给子组件传递数据-->
+            <son-component :score="score"></son-component>
+        </div>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    //定义一个子组件
+    const SonComponent = Vue.extend({
+        template: '#son-component',
+        //用props选项接收数据
+        props:{
+            score:Number
+        },
+        data(){
+            return {
+                extra_score:0
+            }
+        },
+        watch:{
+            extra_score(){
+                //以下代码不能改变父组件中的数据
+                //this.score = this.score + parseInt(this.extra_score)
+                //调用父组件的方法
+                this.$parent.addExtraScore(this.extra_score)
+            }
+        }
+    })
+    //定义一个父组件
+    const FatherComponent = Vue.extend({
+        template: '#father-component',
+        data(){
+            return {
+                //父组件中定义一个需要传递的数据
+                score:88
+            }
+        },
+        //在父组件中注册子组件
+        components:{
+            'son-component': SonComponent
+        },
+        methods:{
+            //父组件中定义个方法供子组件调用
+            addExtraScore(extra_score){
+                this.score = this.score + parseInt(extra_score)
+            }
+        }
+    })
+    const vm1 = new Vue({
+        el: '#app1',
+        components:{
+            'father-component': FatherComponent
+        }
+    })      
+</script>
+
+</html>

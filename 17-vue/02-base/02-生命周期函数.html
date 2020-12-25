@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p ref="elem">{{message}}</p>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello vue'
+        },
+        beforeCreate(){
+            console.log('beforeCreate...')
+            console.log('this.message:',this.message)//undefined
+            console.log('this.$el:',this.$el)//undefined
+            console.log('this.$refs.elem:',this.$refs.elem)//undefined
+        },
+        created() {
+            console.log('created...')
+            console.log('this.message:', this.message)//hello vue
+            console.log('this.$el:', this.$el)//undefined
+            console.log('this.$refs.elem:', this.$refs.elem)//undefined
+        },
+        beforeMount() {
+            console.log('beforeMount...')
+            console.log('this.message:', this.message)//hello vue
+            console.log('this.$el:', this.$el)//<div id="app"><p ref="elem">{{message}}</p></div>
+            console.log('this.$refs.elem:', this.$refs.elem)//undefined
+        },
+        mounted() {
+            console.log('mounted...')
+            console.log('this.message:', this.message)//hello vue
+            console.log('this.$el:', this.$el)//<div id="app"><p>hello vue</p></div>
+            console.log('this.$refs.elem:', this.$refs.elem)//<p>hello vue</p>
+        }, 
+        //当在控制台通过 `vm.message`修改数据时,会执行`beforeUpdate`和`updated`方法。
+        beforeUpdate(){
+            console.log('beforeUpdate...')
+        },
+        updated() {
+            console.log('updated...')
+        },
+        //当在控制台调用 `vm.$destroy()`方法时,会执行`beforeDestroy`和`destroyed`方法。
+        beforeDestroy(){
+            console.log('beforeDestroy...')
+        }, 
+        destroyed(){
+            console.log('destroyed...')
+        }                                 
+    })
+</script>
+
+</html>

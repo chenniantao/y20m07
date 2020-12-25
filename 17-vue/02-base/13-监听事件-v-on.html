@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!--绑定事件-->
+        <button v-on:click="count++">我被点击了{{count}}次</button>
+        <!--绑定简写-->
+        <button @click="count++">我被点击了{{count}}次</button>
+        <!--指定方法-->
+        <button @click="calcacute">我被点击了{{count}}次</button>
+        <!--调用方法-->
+        <button @click="calcacute()">我被点击了{{count}}次</button>
+        <!--调用方法时传递参数-->
+        <button @click="say('hello')">显示消息</button>
+        <p>{{message}}</p>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+           count:0,
+           message:''
+        },
+        //定义方法
+        methods:{
+            calcacute(){
+                this.count++
+            },
+            say(msg){
+                this.message = msg
+            }
+        }
+    })
+</script>
+
+</html>

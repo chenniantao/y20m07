@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <father-component></father-component>
+    </div>
+    <!--子组件模版-->
+    <template id="son-component">
+        <div>
+            <p>this is son component,get score is:{{score}}</p>
+            <input type="number" v-model="extra_score">
+        </div>
+    </template>
+    
+    <!--父组件模版-->
+    <template id="father-component">
+        <div>
+            <p>this is father component,score is:{{score}}</p>
+            <!--1.在父组件中通过动态绑定给子组件传递数据-->
+            <!--2.监听自定以事件并且指定处理事件的函数-->
+            <son-component :score="score"  @get-extra-score="getExtraScore"></son-component>
+        </div>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    //定义一个子组件
+    const SonComponent = Vue.extend({
+        template: '#son-component',
+        //用props选项接收数据
+        props:{
+            score:Number
+        },
+        data(){
+            return {
+                extra_score:0
+            }
+        },
+        watch:{
+            extra_score(){
+                //触发一个自定义事件并且携带数据
+                this.$emit('get-extra-score',this.extra_score)
+            }
+        }
+    })
+    //定义一个父组件
+    const FatherComponent = Vue.extend({
+        template: '#father-component',
+        data(){
+            return {
+                //父组件中定义一个需要传递的数据
+                score:88
+            }
+        },
+        //在父组件中注册子组件
+        components:{
+            'son-component': SonComponent
+        },
+        methods:{
+            //定义一个事件处理程序来接收子组件传递的数据
+            getExtraScore(extra_score){
+                this.score = this.score + parseInt(extra_score)
+            }
+        }
+    })
+    const vm1 = new Vue({
+        el: '#app1',
+        components:{
+            'father-component': FatherComponent
+        }
+    })      
+</script>
+
+</html>

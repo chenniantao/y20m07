@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <button 
+            v-for="(tab,index) in tabs"
+            @click="slectedIndex = index"
+            :key="index"
+        >
+            {{tab}}
+        </button>
+        <component :is="currentComponent"></component>
+    </div>
+    <template id="tab-home">
+        <div>
+            this is tab home page
+        </div>
+    </template>
+    <template id="tab-articles">
+        <div>
+            this is tab articles page
+        </div>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    Vue.component('tab-home',{
+        template: '#tab-home',
+    })
+    Vue.component('tab-articles', {
+        template: '#tab-articles',
+    })   
+    const vm1 = new Vue({
+        el: '#app1',
+        data:{
+            tabs:['home','articles'],
+            slectedIndex:0
+        },
+        computed:{
+            currentComponent(){
+                return 'tab-'+this.tabs[this.slectedIndex]
+            }
+        }
+    })      
+</script>
+
+</html>

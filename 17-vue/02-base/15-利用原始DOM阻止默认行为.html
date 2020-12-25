@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!--方法一:指定一个方法-->
+        <!-- <a @click="goLearn" href="http://www.chenniantao.com">去学习</a> -->
+
+        <!--方法二:指定一个方法的调用,在调用时传递原始的事件对象$event-->
+        <a @click="goLearn('Vue',$event)" href="http://www.chenniantao.com">去学习</a>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        methods: {
+            //方法一:绑定事件时指定法的第一个参数就是原始DOM事件
+            /*
+            goLearn(ev){
+                ev.preventDefault()
+            }
+            */
+
+            //方法二:接收特殊的参数$event
+            goLearn(msg, ev) {
+                console.log(msg)
+                ev.preventDefault()
+            }
+        }
+    })
+</script>
+
+</html>

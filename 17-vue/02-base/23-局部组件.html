@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <!--使用组件-->
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>  
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    const vm1 = new Vue({
+        el: '#app1',
+        //在components 选项中定义局部组件
+        components:{
+            'button-counter':{
+                //组件的data选项必须是一个函数
+                data() {
+                    return {
+                        count: 0
+                    }
+                },
+                methods: {
+                    calculate() {
+                        this.count = this.count + 1
+                    }
+                },
+                template: '<button @click="calculate">我被点击了{{count}}次</button>'
+            }
+        }
+    })
+          
+</script>
+
+</html>

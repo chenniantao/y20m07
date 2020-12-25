@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p{
+            width: 400px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p style="border-bottom: 2px purple solid;color: #f21;">style="border-bottom: 2px purple solid;color: #f21;"</p>
+        <!--基本绑定-->
+        <p :style="strStyle">:style="strStyle"</p>
+        <!--对象语法-->
+        <p :style="{borderBottom:'2px purple solid',color:'#f21'}">:style="{borderBottom:'2px purple solid',color:'#f21'}"</p>
+        <p :style="{borderBottom:activeStyle,color:errorStyle}">:style="{borderBottom:activeStyle,error:errorStyle}"</p>
+        <p :style="objStyle">:class="objStyle"</p>
+        <!--数组语法 -->
+        <p :style="[{borderBottom:'2px purple solid'},{color:'#f21'}]">:style="[{borderBottom:'2px purple solid'},{color:'#f21'}]"</p>
+        <p :style="[{borderBottom:activeStyle},{color:errorStyle}]">:style="[{borderBottom:activeStyle},{color:errorStyle}]"</p>
+        <p :style="arrStyle">:style="arrStyle"</p>
+       
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            strStyle: 'border-bottom: 2px purple solid;color: #f21;',
+            activeStyle:'2px purple solid',
+            errorStyle: '#f21',
+            objStyle:{
+                borderBottom: '2px purple solid', 
+                color: '#f21'
+            },
+            arrStyle:[{ borderBottom: '2px purple solid' }, { color: '#f21' }],
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,16 @@
+.
+├── babel.config.js //babel 配置
+├── node_modules 
+├── package-lock.json 
+├── package.json 
+├── public //静态资源
+│   ├── favicon.ico
+│   └── index.html //整个项目的html页面
+└── src
+    ├── App.vue //整个项目的根组件
+    ├── components //组件目录
+    ├── main.js //项目的入口
+    ├── pages //页面目录
+    └── router //路由目录
+
+3004 directories, 18540 files

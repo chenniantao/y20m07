@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="fullName">    
+        <p>firstName:{{firstName}}</p>
+        <p>lastName:{{lastName}}</p>
+        <p>fullName:{{fullName}}</p>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data:{
+            firstName:'Chen',
+            lastName:'Tom'
+        },
+        //计算属性选项
+        computed:{
+            fullName:{
+                get(){
+                    return this.firstName +' '+ this.lastName
+                },
+                set(val){
+                    var names = val.split(' ')
+                    this.firstName = names[0]
+                    this.lastName = names.slice(1).join(' ')
+                }
+            }
+        }
+    })
+</script>
+
+</html>

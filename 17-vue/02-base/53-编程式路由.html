@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <!-- 使用 router-link 组件来导航. -->
+            <router-link to="/home">Home</router-link>
+            <router-link to="/articles">Articles</router-link>
+            <router-link to="/about">About</router-link>
+        </div>
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+    </div>
+
+    <template id='home'>
+        <p>home page</p>
+    </template>
+    <template id='articles'>
+        <div>
+            <p><router-link to="/articles/art">art</router-link> | <router-link to="/articles/sport">sport</router-link></p>
+            <router-view></router-view>
+        </div>
+    </template>
+    <template id='article-detail'>
+        <p>article detail page,{{id}}
+        </p>
+    </template>
+    <template id='about'>
+        <p>about page</p>
+    </template>
+    <template id='art'>
+        <!-- <p>art page,<router-link :to="{name:'articleDetail',params:{id:123}}">Articles Detail</router-link></p> -->
+        <p>art page,<a href="javascript:;" @click="goDetail">Articles Detail</a></p>
+    </template>
+    <template id='sport'>
+        <p>sport page,<router-link :to="{name:'articleDetail',params:{id:456}}">Articles Detail</router-link></p>
+    </template>
+    <template id='not-found'>
+        <p>404 not found</p>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script src="./vue-router.js"></script>
+<script>
+    //1.定义路由的组件
+    const Home = Vue.extend({ template: '#home'})
+    const Articles = Vue.extend({ template: '#articles' })
+    const ArticleDetail = Vue.extend({ 
+        template: '#article-detail',
+        props:['id'] 
+    })
+    const Art = Vue.extend({ 
+        template: '#art',
+        methods:{
+            goDetail(){
+                //this.$router.push({ name: 'articleDetail', params: { id: 123 } })
+                this.$router.push('/articles/detail/123')
+            }
+        } 
+    })
+    const Sport = Vue.extend({ template: '#sport' })          
+    const About = Vue.extend({ template: '#about' })
+    const NotFound = Vue.extend({template:'#not-found'})
+    //2.定义路由
+    const routes = [
+        { path: '/home', component: Home },
+        { 
+            path: '/articles', 
+            component: Articles,
+            children:[
+                // /articles/art 
+                {path:'art',component:Art},
+                {path: 'sport',component: Sport}, 
+                {path: '/', redirect: 'art' }               
+            ] 
+        },
+        { 
+            path: '/articles/detail/:id', 
+            component: ArticleDetail, 
+            name:'articleDetail',
+            props:true
+        },
+        { path: '/about', component: About },
+        { path: '/', redirect: '/home' }, //重定向:从 '/'  重定向到 '/home'  
+        { path: '*', component: NotFound },
+    ]
+    //3.根据路由创建 router 实例
+    const router = new VueRouter({
+        routes 
+    })
+    //4.创建根实例并且配置router               
+    const vm = new Vue({
+        el: '#app',
+        router
+    })        
+</script>
+
+</html>

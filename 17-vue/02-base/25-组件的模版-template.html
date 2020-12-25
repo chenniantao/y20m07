@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <!--使用组件-->
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+    <!--
+        注意1:模版需要写在挂载组件的外面
+        注意2:为template其添加一个 id,在组件注册时通过id选择器引用
+    -->
+    <template id="button-counter">
+        <button @click="calculate">我被点击了{{count}}次</button>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    Vue.component('button-counter', {
+        data() {
+            return {
+                count: 0
+            }
+        },    
+        methods: {
+            calculate() {
+                this.count = this.count + 1
+            }
+        },
+        //通过id选择器引用模版
+        template: '#button-counter'
+    })
+    const vm1 = new Vue({
+        el: '#app1',
+    })      
+</script>
+
+</html>

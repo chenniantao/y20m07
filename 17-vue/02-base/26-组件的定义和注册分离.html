@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <!--使用组件-->
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+    <template id="button-counter">
+        <button @click="calculate">我被点击了{{count}}次</button>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    //组件的定义
+    const ButtonCounter = Vue.extend({
+        data() {
+            return {
+                count: 0
+            }
+        },
+        methods: {
+            calculate() {
+                this.count = this.count + 1
+            }
+        },
+        template: '#button-counter'
+    })
+    //组件的注册
+    Vue.component('button-counter', ButtonCounter)
+
+    const vm1 = new Vue({
+        el: '#app1',
+    })      
+</script>
+
+</html>

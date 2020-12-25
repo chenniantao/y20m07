@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <layout>
+            <!--匿名插槽的内容-->
+            <p> 我是内容</p>
+        </layout>
+    </div>
+    <template id="layout">
+        <div>
+           <nav>我是导航</nav>
+           <div class="content">
+                <!--匿名插槽,如果有多个匿名插槽,每一个匿名插槽都会被匿名插槽的内容替换-->
+                <slot>我是默认的内容</slot>
+           </div>
+           <footer>我是footer</footer>
+        </div>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    Vue.component('layout', {
+        template: '#layout',
+    })
+    const vm1 = new Vue({
+        el: '#app1',
+    })      
+</script>
+
+</html>

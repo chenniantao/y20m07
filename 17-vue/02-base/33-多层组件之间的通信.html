@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <grand-father-component :score="score"></grand-father-component>
+    </div>
+    <!--子组件模版-->
+    <template id="son-component">
+        <div>
+            <p>son-component get score is:{{score}}</p>
+        </div>
+    </template>
+    <!--父组件模版-->
+    <template id="father-component">
+        <div>
+            <p>father-component get score is:{{score}}</p>
+            <son-component :score="score"></son-component>
+        </div>
+    </template>
+    <!--祖父组件模版-->
+    <template id="grand-father-component">
+        <div>
+            <p>grand-father-component get score is:{{score}}</p>
+            <father-component :score="score"></father-component>
+        </div>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    //定义一个子组件
+    const SonComponent = Vue.extend({
+        template: '#son-component',
+        props: {
+            score: Number
+        }
+    })    
+    //定义一个父组件
+    const FatherComponent = Vue.extend({
+        template: '#father-component',
+        components:{
+            'son-component': SonComponent,
+        },
+        props: {
+            score: Number
+        }
+    })
+    //定义一个祖父组件
+    const GrandFatherComponent = Vue.extend({
+        template: '#grand-father-component',
+        components: {
+            'father-component': FatherComponent,
+        },
+        props:{
+            score:Number
+        }
+    })    
+    const vm1 = new Vue({
+        el: '#app1',
+        data:{
+            score:100
+        },
+        components:{
+            'grand-father-component': GrandFatherComponent
+        }
+    })      
+</script>
+
+</html>

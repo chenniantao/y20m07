@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #app1{
+            width: 800px;
+            margin: 50px auto;
+        }
+        button{
+            width: 100px;
+            margin-right: 10px;
+        }
+        li{
+            list-style: none;
+            line-height: 20px;
+            border-bottom: 1px dashed #ccc;
+            margin: 10px 10px 0 0;
+            padding-right: 10px;
+            cursor: pointer;
+        }
+        li.active{
+            border-right: 4px solid #f21;
+        }
+        .articles-wrap{
+            display: flex;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app1">
+        <button 
+            v-for="(tab,index) in tabs"
+            @click="slectedIndex = index"
+            :key="index"
+        >
+            {{tab}}
+        </button>
+        <keep-alive>
+        <component :is="currentComponent"></component>
+        </keep-alive>
+    </div>
+    <template id="tab-home">
+        <div>
+            this is tab home page
+        </div>
+    </template>
+    <template id="tab-articles">
+        <div class="articles-wrap">
+            <ul>
+                <li 
+                    v-for="article in articles" 
+                    :key="article.id"
+                    @click="selectedArticle = article"
+                    :class="{active:selectedArticle == article}"
+                >
+                    {{article.title}}
+                </li>
+            </ul>
+            <div v-if="selectedArticle">
+                {{selectedArticle.content}}
+            </div>
+        </div>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    Vue.component('tab-home',{
+        template: '#tab-home',
+    })
+    Vue.component('tab-articles', {
+        template: '#tab-articles',
+        data(){
+            return {
+                articles:[
+                    {id:1,title:'vue',content:'vue是渐进式JavaScript框架'},
+                    {id:2,title:'react',content:'react是一个前端UI框架'},
+                ],
+                selectedArticle:null
+            }
+        }
+    })   
+    const vm1 = new Vue({
+        el: '#app1',
+        data:{
+            tabs:['home','articles'],
+            slectedIndex:0
+        },
+        computed:{
+            currentComponent(){
+                return 'tab-'+this.tabs[this.slectedIndex]
+            }
+        }
+    })      
+</script>
+
+</html>

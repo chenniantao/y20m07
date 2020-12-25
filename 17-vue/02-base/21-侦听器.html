@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="number" v-model="price">
+        <p>{{price}}</p>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            price:0
+        },
+        watch:{
+            price(){
+                if(this.price > 1000){
+                    console.log('price is height')
+                } 
+            }
+        }
+    })
+    //除了 watch 选项之外，还可以使用命令式的 vm.$watch api
+    //以下方法等价上述wathc选项中的侦听器
+    /*
+    vm.$watch('price',function(){
+        if (this.price > 1000) {
+            console.log('price is height')
+        } 
+    })
+    */
+</script>
+
+</html>

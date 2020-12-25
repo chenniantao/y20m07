@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app1">
+        <!--使用组件-->
+        <!--中通过动态绑定给组件传递数据-->
+        <my-component :msg="msg"></my-component>
+    </div>
+    <template id="my-component">
+        <p>this is my component,get msg is {{msg}}</p>
+    </template>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script>
+    //组件的定义
+    const MyComponent = Vue.extend({
+        template: '#my-component',
+        //用props选项接收数据
+        
+        //方法一:数组中指定需要接收的属性名称
+        //props:['msg']
+        
+        //方法二:对象中指定需要接收的属性名称和类型
+        /*
+        props: {
+            msg: String
+        }
+        */
+        //方法三:对象中指定需要接收的属性名称和类型并且指定默认值       
+        props:{
+            msg:{
+                type:String,
+                default:'hello'
+            }
+        }
+    })
+    //组件的注册
+    Vue.component('my-component', MyComponent)
+
+    const vm1 = new Vue({
+        el: '#app1',
+        data:{
+            msg:'hello'
+        }
+    })      
+</script>
+
+</html>
