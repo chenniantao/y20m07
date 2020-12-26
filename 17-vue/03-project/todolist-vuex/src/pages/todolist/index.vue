@@ -1,7 +1,7 @@
 <template>
     <div class="todolist">
-        <Head :addItem="addItem"></Head>
-        <List :list="list" :delItem="delItem"></List>
+        <Head></Head>
+        <List></List>
     </div>
 </template>
 
@@ -14,16 +14,14 @@ export default {
     components:{
         Head,
         List
-    },  
-    data(){
-        return {
-            list:[],
-        }
     },
+    /*  
     async mounted(){
         const result = await axios.get('http://127.0.0.1:3000')
         this.list = result.data
     },
+    */
+    /*
     methods:{
         addItem(task){
             this.list.push({
@@ -36,6 +34,7 @@ export default {
             this.list = list
         }
     }
+    */
 }
 </script>
 

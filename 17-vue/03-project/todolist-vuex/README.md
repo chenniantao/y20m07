@@ -1,4 +1,4 @@
-# todolist
+# todolist-vuex
 
 ## Project setup
 ```
