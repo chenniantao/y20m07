@@ -15,7 +15,11 @@ export default {
     },
     methods:{
         handleAddItem(){
-            console.log('add...')
+            const payload = {
+                id:Date.now(),
+                task:this.task
+            }
+            this.$store.commit('addItem',payload)
             this.task = ''
         }
     }

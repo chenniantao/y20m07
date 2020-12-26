@@ -25,7 +25,14 @@ const store = new Vuex.Store({
     mutations:{
         loadItem(state,payload){
             state.list = payload
-        }
+        },
+        addItem(state,payload){
+            state.list.push(payload)
+        },
+        delItem(state,payload){
+            const list = state.list.filter(item=>item.id != payload)
+            state.list = list
+        }   
     }
 })
 

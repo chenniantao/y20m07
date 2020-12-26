@@ -19,7 +19,7 @@ export default {
     name:'List',
     methods:{
         delItem(id){
-            console.log('delItem',id)
+            this.$store.commit('delItem',id)
         }
     }
 }
