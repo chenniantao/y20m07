@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Head from '../../components/head'
 import List from '../../components/list'
 export default {
@@ -15,6 +14,9 @@ export default {
         Head,
         List
     },
+    mounted(){
+        this.$store.dispatch('loadItem')
+    }
     /*  
     async mounted(){
         const result = await axios.get('http://127.0.0.1:3000')

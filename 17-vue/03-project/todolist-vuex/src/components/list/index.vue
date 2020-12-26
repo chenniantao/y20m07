@@ -10,7 +10,7 @@
                 {{item.task}}
             </li>
         </transition-group>
-        <!-- <p class="footer">共计{{total}}个项目</p> -->
+        <p class="footer">共计{{this.$store.getters.total}}个项目</p> 
     </div>
 </template>
 
