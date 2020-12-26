@@ -7,7 +7,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import {LOAD_ITEM} from './store/types'
+import {LOAD_ITEM} from '../../store/types'
 import Head from '../../components/head'
 import List from '../../components/list'
 export default {

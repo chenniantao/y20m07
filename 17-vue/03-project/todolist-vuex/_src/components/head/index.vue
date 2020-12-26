@@ -7,7 +7,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import {ADD_ITEM} from '../../pages/todolist/store/types'
+import {ADD_ITEM} from '../../store/types'
 export default {
     name:'Head',
     data(){

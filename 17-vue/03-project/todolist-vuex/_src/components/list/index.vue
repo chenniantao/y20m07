@@ -18,13 +18,13 @@
             </li>
         </transition-group>
         <!-- <p class="footer">共计{{this.$store.getters.total}}个项目</p>  -->
-        <p class="footer">共计{{total}}--{{total2}}个项目</p> 
+        <p class="footer">共计{{total}}个项目</p> 
     </div>
 </template>
 
 <script>
 import { mapState,mapGetters,mapMutations } from 'vuex'
-import {DEL_ITEM} from '../../pages/todolist/store/types'
+import {DEL_ITEM} from '../../store/types'
 export default {
     name:'List',
     methods:{
@@ -44,12 +44,11 @@ export default {
     computed:{
         //...mapState(['list']), 
         ...mapState({
-            list:state=>state.todolist.list
+            list:state=>state.list
         }),
         // ...mapGetters(['total'])
         ...mapGetters({
-            total:'total',
-            total2:'home_total'
+            total:'total'
         })
     }
 }
