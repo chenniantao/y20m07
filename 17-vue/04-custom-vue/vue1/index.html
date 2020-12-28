@@ -8,8 +8,16 @@
 <body>
     <div id="app">
         <p>{{msg}}</p>
+        <p>{{msg}}</p>
+        <p v-text="msg"></p>
+        <p>{{a}}</p>
+        <input type="text" v-model="msg">
+        <button v-on:click="test">点我</button>
     </div>
 </body>
+<script src="./js/proxy.js"></script>
+<script src="./js/dep.js"></script>
+<script src="./js/watcher.js"></script>
 <script src="./js/compiler.js"></script>
 <script src="./js/observer.js"></script>
 <script src="./js/vue.js"></script>
@@ -22,6 +30,16 @@
                 obj2:{
                     name:'obj1-obj2'
                 }
+            }
+        },
+        methods:{
+            test(){
+                this.msg = 'hao'
+            }
+        },
+        computed:{
+            a(){
+                return this.msg + ' a'
             }
         }
     })
