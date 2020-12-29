@@ -9,7 +9,7 @@ module.exports = {
                 path.resolve(__dirname, './src/assets/less/index.less')
             ]
         },
-    },
+    },   
     css: {
         loaderOptions: {
             less: {

@@ -1,6 +1,9 @@
 <template>
     <div class="tab-bar">
-        <van-tabbar v-model="active" @change="onChange">
+        <van-tabbar 
+            v-model="active" 
+            route
+        >
             <van-tabbar-item 
                 icon="home-o"
                 to="/home"
@@ -35,11 +38,6 @@ export default {
     data(){
         return {
             active:0
-        }
-    },
-    methods:{
-        onChange(index){
-            console.log(index)
         }
     }
 }
